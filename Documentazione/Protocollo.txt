@@ -1,0 +1,82 @@
+protocollo di comunicazione: TCP
+linguaggio protocollo: XML
+linguaggio di programmazione: Java (Dema, Paci), C# (Conti, Luci)
+
+////PROTOCOLLO DI COMUNICAZIONE
+Scelta pokemon (senza connessione con nessuno)
+Inizio connessione -> nessun altro si può connettere
+p2 -> invia pokemon
+	 - nome
+	 - vita
+	 - tipo
+	 - genere
+	 - livello
+
+p1 riceveve pokemon e -> invia pokemon
+	 - nome
+	 - vita
+	 - tipo
+	 - genere
+	 - livello
+
+----INIZIO BATTAGLIA
+
+---TURNI
+(Inizia p1 -> chi manda richiesta di lotta)	 
+p1 -> scelta mossa
+	-attacco
+	-azione inventario (cura)
+	-cambio pokemon
+
+
+ATTACCO: 
+p1 -> invio:
+ - nome mossa
+ - tipo mossa
+ - danni 
+	
+p2 -> elabora danni
+	 - controlla tipo
+	 - applica moltiplicatore (nel caso)
+	 - sottrae danni alla vita
+p2 -> invia dati (risposta attacco)
+	 - vita (controllo se pokemon esausto)
+	 - molt (es. 1 = superefficace, 2 = non efficace ecc...)
+(poi turno di p2)
+
+
+
+AZIONE INVETARIO (cura):
+p1 -> invio:
+ - oggetto utilizzato
+ - vita nuova
+ (poi turno di p2)
+
+
+
+CAMBIO POKEMON:
+p1 -> invio pokemon:
+	 - nome
+	 - vita
+	 - tipo
+	 - genere
+	 - livello
+ (poi turno di p2)
+
+(Durante il suo turno p2 può eseguire le stesse azioni di p1)
+
+
+
+----IN CASO POKEMON ESAUSTO
+	 - aspetta nuovo pokemon avversario (se ultimo esausto -> allora sconfitta)
+
+peer -> invia pokemon
+	 - nome
+	 - vita
+	 - tipo
+	 - genere
+	 - livello
+
+----CHIUSURA CONNESSIONE
+	condizioni: tutti i pokemon esausti o resa volontaria
+peer -> invia comando chiusura e perde, mentre l'altro peer chiude tutto e vince
