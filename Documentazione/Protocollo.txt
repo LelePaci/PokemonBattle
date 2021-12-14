@@ -80,3 +80,154 @@ peer -> invia pokemon
 ----CHIUSURA CONNESSIONE
 	condizioni: tutti i pokemon esausti o resa volontaria
 peer -> invia comando chiusura e perde, mentre l'altro peer chiude tutto e vince
+
+
+
+FILE XML DI ESEMPIO:
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- invio nome dell'allenatore -->
+<root>
+<comando>m</comando>
+<nome>giosberta</nome>
+</root>
+
+<!-- XML DEL POKEMON (sarà una classe)-->
+<pokemon>
+    <nome>Pansage</nome>
+    <vita>300</vita>
+    <tipo>erba</tipo>
+    <mosse>
+        <mossa>
+            <nome>Graffio</nome>
+            <tipo>Normale</tipo>
+            <danni>30</danni>
+            <utilizziMax>30</utilizziMax>
+        </mossa>
+        <mossa>
+            <nome>Graffio</nome>
+            <tipo>Normale</tipo>
+            <danni>30</danni>
+            <utilizziMax>30</utilizziMax>
+        </mossa>
+        <mossa>
+            <nome>Graffio</nome>
+            <tipo>Normale</tipo>
+            <danni>30</danni>
+            <utilizziMax>30</utilizziMax>
+        </mossa>
+        <mossa>
+            <nome>Graffio</nome>
+            <tipo>Normale</tipo>
+            <danni>30</danni>
+            <utilizziMax>30</utilizziMax>
+        </mossa>
+    </mosse>
+    <status></status><!-- di base sarà vuoto -->
+</pokemon>
+
+<!-- XML SCELTA DEL POKEMON  s -->
+<root>
+    <comando>s</comando>
+    <pokemon>
+        <nome>Pikachu</nome>
+        <vita>200</vita>
+        <tipo>Elettro</tipo>
+        <genere>?</genere>
+        <livello>10</livello>
+        <status></status>
+    </pokemon>
+</root>
+
+<!-- XML DURANTE I TURNI -->
+<!-- ATTACCO PEER 1 (ESEMPIO) a -->
+    <root>
+    <comando>a</comando>
+    <nomeMossa>Fulmine</nomeMossa>
+    <tipoMossa>Elettro</tipoMossa>
+    <danni>30</danni>
+    <confuso>0/1</confuso>
+    </root>
+    <!-- RISPOSTA ALL'ATTACCO PEER 2 (ESEMPIO) r -->
+    <root>
+        <comando>r</comando>
+        <vitaRimanente>150</vitaRimanente>
+        <moltiplicatore>1</moltiplicatore>
+        <note>Il pokemon è stordito</note> <!-- va a cambiare lo status del pokemon -->
+    </root>
+    <!-- peer 1 e peer 2 si invertono ora -->
+
+<!-- AZIONE INVENTARIO i -->
+    <root>
+        <comando>i</comando>
+        <oggetto>Pozione</oggetto>
+        <pokemon>bulbasaur</pokemon>
+        <vitaAttuale>300</vitaAttuale>
+    </root>
+
+<!-- Resa volontaria f -->
+    <root>
+    <comando>f</comando>
+    </root>
+<!-- CAMBIO POKEMON VOLONTARIO c -->
+    <root>
+    <comando>c</comando>
+    <pokemon>
+        <nome>Pikachu</nome>
+        <vita>200</vita>
+        <tipo>Elettro</tipo>
+        <genere>?</genere>
+        <livello>10</livello>
+    </pokemon>
+    </root>
+<!-- POKEMON SCONFITTO l peer1 -->
+    <root>
+        <comando>l</comando>
+        <pokemon>pikachu</pokemon>
+    </root>
+
+<!-- Opzioni peer 2 -->
+    <root>
+    <comando>c</comando>
+    <pokemon>
+        <nome>Pikachu</nome>
+        <vita>200</vita>
+        <tipo>Elettro</tipo>
+        <genere>?</genere>
+        <livello>10</livello>
+    </pokemon>
+    </root>
+
+    <root>
+    <comando>n</comando>
+    </root>
+<!-- XML FINE BATTAGLIA-->
+<root>
+    <comando>f</comando>
+</root>
+
+<!-- status e -->
+<root>
+    <comando>e</comando>
+    <pokemon>pikachu</pokemon>
+    <status>bruciatura</status>
+    <danniOverTime>
+        <aggiunta>si</aggiunta>
+        <dps>10</dps>
+        <tipo>fuoco</tipo>
+    </danniOverTime>
+</root>
+
+<root>
+    <comando>e</comando>
+    <pokemon>pikachu</pokemon><!-- pokemon che ho io -->
+    <status>confuso</status>
+    <danniOverTime>
+        <aggiunta>si</aggiunta>
+        <dps>danno della mossa selezionata</dps>
+        <tipo>tipo della mossa selezionata</tipo>
+    </danniOverTime>
+    <vita>vita dopo il dps</vita>
+</root>
