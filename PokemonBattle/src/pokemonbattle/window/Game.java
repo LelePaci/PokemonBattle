@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pokemonbattle.framework.*;
+import pokemonbattle.objects.*;
 
 /**
  *
@@ -21,12 +23,15 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private Thread thread;
 
+    //Object
+    private Handler handler;
+
     public Game() {
-        new Window(960, 640, "Pokemon Battle", this);
+        Window window = new Window(960, 640, "Pokemon Battle", this);
     }
 
     public static void main(String[] args) {
-        new Game();
+        Game game = new Game();
     }
 
     public synchronized void start() {
@@ -49,6 +54,8 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
+        init();
+        this.requestFocus();
         System.out.println("Game started");
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -78,23 +85,30 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void tick() {
+    public void init() {
+        handler = new Handler();
+        
 
+    }
+
+    public void tick() {
+        handler.tick();
     }
 
     public void render() {
         BufferStrategy strategy = this.getBufferStrategy();
         if (strategy == null) {
             this.createBufferStrategy(3);
-            return; 
+            return;
         }
-        Graphics g = strategy.getDrawGraphics();  
+        Graphics g = strategy.getDrawGraphics();
         ////////////
-        
+
         g.setColor(Color.red);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        
+
         ////////////
+        handler.render(g);
         g.dispose();
         strategy.show();
     }
