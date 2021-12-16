@@ -6,6 +6,9 @@
 package pokemonbattle;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,6 +83,19 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void render() {
-
+        BufferStrategy strategy = this.getBufferStrategy();
+        if (strategy == null) {
+            this.createBufferStrategy(3);
+            return; 
+        }
+        Graphics g = strategy.getDrawGraphics();  
+        ////////////
+        
+        g.setColor(Color.red);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        
+        ////////////
+        g.dispose();
+        strategy.show();
     }
 }
