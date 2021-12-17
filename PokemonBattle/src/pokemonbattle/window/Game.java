@@ -22,11 +22,10 @@ public class Game extends Canvas implements Runnable {
 
     private boolean running = false;
     private Thread thread;
-    
+
     public static int HEIGHT;
     public static int WIDTH;
 
-    private static Texture tex;
     //Object
     private Handler handler;
 
@@ -34,8 +33,7 @@ public class Game extends Canvas implements Runnable {
         Window window = new Window(960, 640, "Pokemon Battle", this);
         HEIGHT = getWidth();
         WIDTH = getWidth();
-        
-        
+
     }
 
     public static void main(String[] args) {
@@ -94,10 +92,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
-        tex = new Texture();
         handler = new Handler();
-        
-        handler.add(new Trainer(WIDTH/2, 100));
+
+        handler.add(new TrainerFront(WIDTH / 2, 100, 2));
 
     }
 
@@ -121,9 +118,5 @@ public class Game extends Canvas implements Runnable {
         handler.render(g);
         g.dispose();
         strategy.show();
-    }
-    
-    public static Texture getTexture(){
-        return tex;
     }
 }
