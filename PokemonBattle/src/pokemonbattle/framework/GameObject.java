@@ -13,19 +13,27 @@ import java.util.LinkedList;
  * @author paci_emanuele
  */
 public abstract class GameObject {
-    
+
     protected float x, y;
     protected float velX = 0, velY = 0;
+    protected int sizeMultiplier;
     protected Texture texture;
 
-    public GameObject(float x, float y){
+    public GameObject(float x, float y) {
         this.x = x;
         this.y = y;
+        this.sizeMultiplier = 1;
     }
-    
-    public abstract void tick (LinkedList<GameObject> object);
+
+    public GameObject(float x, float y, int sizeMultiplier) {
+        this.x = x;
+        this.y = y;
+        this.sizeMultiplier = sizeMultiplier;
+    }
+
+    public abstract void tick(LinkedList<GameObject> object);
     public abstract void render(Graphics g);
-    
+
     public float getX() {
         return x;
     }
@@ -56,5 +64,5 @@ public abstract class GameObject {
 
     public void setVelY(float velY) {
         this.velY = velY;
-    } 
+    }
 }

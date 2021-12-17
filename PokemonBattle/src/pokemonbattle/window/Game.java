@@ -97,7 +97,8 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
 
         handler.add(new Background("res/intro-screens.png", 0, 0, WIDTH, HEIGHT));
-        handler.add(new TrainerFront(WIDTH / 2, 250, 2));
+        //handler.add(new TrainerFront(WIDTH / 2, 250, 2, 2));
+        handler.add(new TrainerBack(WIDTH / 2, 250, 2));
         
     }
 

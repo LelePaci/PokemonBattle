@@ -7,8 +7,7 @@ package pokemonbattle.objects;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
-import pokemonbattle.framework.GameObject;
-import pokemonbattle.framework.Texture;
+import pokemonbattle.framework.*;
 
 /**
  *
@@ -16,15 +15,12 @@ import pokemonbattle.framework.Texture;
  */
 public class Background extends GameObject {
 
-    private float width;
-    private float height;
+    private final float width, height;
 
     public Background(String path, float x, float y, float width, float height) {
         super(x, y);
         this.width = width;
         this.height = height;
-        System.out.println(this.width);
-        System.out.println(this.height);
         this.texture = new Texture(path, 5, 5, 240, 160);
     }
 
@@ -37,5 +33,4 @@ public class Background extends GameObject {
     public void render(Graphics g) {
         g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
     }
-
 }
