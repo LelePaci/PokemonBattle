@@ -16,6 +16,7 @@ public abstract class GameObject {
     
     protected float x, y;
     protected float velX = 0, velY = 0;
+    protected Texture texture;
 
     public GameObject(float x, float y){
         this.x = x;

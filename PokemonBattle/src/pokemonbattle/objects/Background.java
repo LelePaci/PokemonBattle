@@ -5,24 +5,27 @@
  */
 package pokemonbattle.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import pokemonbattle.framework.GameObject;
-import pokemonbattle.framework.*;
-import pokemonbattle.window.*;
+import pokemonbattle.framework.Texture;
 
 /**
  *
  * @author pacie
  */
-public class Trainer extends GameObject {
+public class Background extends GameObject {
 
-    private float width = 100, height = width * 2;
-    private Texture texture = Game.getTexture();
+    private float width;
+    private float height;
 
-    public Trainer(float x, float y) {
+    public Background(String path, float x, float y, float width, float height) {
         super(x, y);
+        this.width = width;
+        this.height = height;
+        System.out.println(this.width);
+        System.out.println(this.height);
+        this.texture = new Texture(path, 5, 5, 240, 160);
     }
 
     @Override
@@ -32,8 +35,7 @@ public class Trainer extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        //g.setColor(Color.orange);
-        //g.drawRect((int) (x - width / 2), (int) y, (int) width, (int) height);
-        //g.drawImage(texture.trainers[1], (int) x, (int) y, null);
+        g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
     }
+
 }

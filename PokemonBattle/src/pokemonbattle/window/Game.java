@@ -31,13 +31,15 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
-        HEIGHT = getWidth();
+        HEIGHT = getHeight();
         WIDTH = getWidth();
 
     }
 
     public static void main(String[] args) {
         Game game = new Game();
+        
+        
     }
 
     public synchronized void start() {
@@ -94,8 +96,9 @@ public class Game extends Canvas implements Runnable {
     public void init() {
         handler = new Handler();
 
-        handler.add(new TrainerFront(WIDTH / 2, 100, 2));
-
+        handler.add(new Background("res/intro-screens.png", 0, 0, WIDTH, HEIGHT));
+        handler.add(new TrainerFront(WIDTH / 2, 250, 2));
+        
     }
 
     public void tick() {
@@ -109,12 +112,7 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = strategy.getDrawGraphics();
-        ////////////
 
-        g.setColor(Color.red);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
-        ////////////
         handler.render(g);
         g.dispose();
         strategy.show();
