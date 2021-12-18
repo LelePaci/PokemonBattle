@@ -6,10 +6,8 @@
 package pokemonbattle.window;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
@@ -34,12 +32,10 @@ public class Game extends Canvas implements Runnable {
         Window window = new Window(960, 640, "Pokemon Battle", this);
         HEIGHT = getHeight();
         WIDTH = getWidth();
-
     }
 
     public static void main(String[] args) {
         Game game = new Game();
-
     }
 
     public synchronized void start() {
@@ -98,8 +94,11 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+    KeyInput input;
     public void init() {
         handler = new Handler();
+        input = new KeyInput(handler);
+        this.addKeyListener(input);
         Texture texture;
 
         handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
@@ -107,7 +106,7 @@ public class Game extends Canvas implements Runnable {
 
         texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
         handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
-                (HEIGHT - texture.getSize(3).height),
+                (HEIGHT - texture.getSize(3).height - 5),
                 texture.getSize(3).width,
                 texture.getSize(3).height, texture));
     }
@@ -125,6 +124,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = strategy.getDrawGraphics();
 
         handler.render(g);
+        input.paint(g);
         g.dispose();
         strategy.show();
     }
