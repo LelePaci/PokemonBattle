@@ -16,13 +16,13 @@ public abstract class GameObject {
 
     protected float x, y;
     protected float velX = 0, velY = 0;
+    protected float width, height;
     protected int sizeMultiplier;
     protected Texture texture;
 
     public GameObject(float x, float y) {
         this.x = x;
         this.y = y;
-        this.sizeMultiplier = 1;
     }
 
     public GameObject(float x, float y, int sizeMultiplier) {
@@ -31,7 +31,53 @@ public abstract class GameObject {
         this.sizeMultiplier = sizeMultiplier;
     }
 
+    public GameObject(float x, float y, float width, float height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    public GameObject(float x, float y, float width, float height, int sizeMultiplier) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.sizeMultiplier = sizeMultiplier;
+    }
+
+    public GameObject(float x, float y, Texture texture) {
+        this.x = x;
+        this.y = y;
+        this.texture = texture;
+    }
+
+    public GameObject(float x, float y, Texture texture, int sizeMultiplier) {
+        this.x = x;
+        this.y = y;
+        this.texture = texture;
+        this.sizeMultiplier = sizeMultiplier;
+    }
+
+    public GameObject(float x, float y, float width, float height, Texture texture) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.texture = texture;
+    }
+
+    public GameObject(float x, float y, float width, float height, Texture texture, int sizeMultiplier) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.texture = texture;
+        this.sizeMultiplier = sizeMultiplier;
+    }
+
     public abstract void tick(LinkedList<GameObject> object);
+
     public abstract void render(Graphics g);
 
     public float getX() {

@@ -9,6 +9,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
@@ -38,8 +39,7 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-        
-        
+
     }
 
     public synchronized void start() {
@@ -73,6 +73,11 @@ public class Game extends Canvas implements Runnable {
         int updates = 0;
         int frames = 0;
         while (running) {
+            try {
+                Thread.sleep(33);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -95,11 +100,16 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         handler = new Handler();
+        Texture texture;
 
-        handler.add(new Background("res/intro-screens.png", 0, 0, WIDTH, HEIGHT));
-        //handler.add(new TrainerFront(WIDTH / 2, 250, 2, 2));
-        handler.add(new TrainerBack(WIDTH / 2, 250, 2));
-        
+        handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
+        handler.add(new TrainerFront(WIDTH / 2, 185, 2, 3));
+
+        texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
+        handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
+                (HEIGHT - texture.getSize(3).height),
+                texture.getSize(3).width,
+                texture.getSize(3).height, texture));
     }
 
     public void tick() {

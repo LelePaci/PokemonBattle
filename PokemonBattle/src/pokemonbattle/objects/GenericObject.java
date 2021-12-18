@@ -13,15 +13,10 @@ import pokemonbattle.framework.*;
  *
  * @author pacie
  */
-public class Background extends GameObject {
+public class GenericObject extends GameObject {
 
-    private final float width, height;
-
-    public Background(String path, float x, float y, float width, float height) {
-        super(x, y);
-        this.width = width;
-        this.height = height;
-        this.texture = new Texture(path, 0, 0, 240, 160);
+    public GenericObject(float x, float y, float width, float height, Texture texture) {
+        super(x, y, width, height, texture);
     }
 
     @Override

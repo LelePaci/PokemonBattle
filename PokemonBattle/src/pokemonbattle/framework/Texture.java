@@ -5,6 +5,7 @@
  */
 package pokemonbattle.framework;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -20,5 +21,11 @@ public class Texture {
         loader = new BufferedImageLoader();
         Sprite sprite = new Sprite(loader.loadImage(path));
         image = sprite.takeImage(x, y, width, height);
+    }
+
+    public Rectangle getSize(int sizeMultiplier) {
+        int width = image.getWidth() * sizeMultiplier;
+        int height = image.getHeight() * sizeMultiplier;
+        return new Rectangle(width, height);
     }
 }

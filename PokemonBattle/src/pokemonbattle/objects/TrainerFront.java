@@ -15,18 +15,11 @@ import pokemonbattle.framework.*;
  */
 public class TrainerFront extends GameObject {
 
-    private float width, height;
-
-    public TrainerFront(float x, float y, int type) {
-        super(x, y);
-        init(type);
-    }
-
     public TrainerFront(float x, float y, int type, int sizeMultiplier) {
         super(x, y, sizeMultiplier);
         init(type);
     }
-
+    
     public final void init(int type) {
         if (type == 1) {
             this.texture = new Texture("res/trainers.png", 400, 128, 96, 104);
