@@ -9,6 +9,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
@@ -104,16 +105,26 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         handler = new Handler();
-        input = new KeyInput(handler);
+        input = new KeyInput(this, handler);
         this.addKeyListener(input);
         pokeFont = new PokeFont();
         createLevel_InsertName(Condivisa.level);
     }
 
     public void tick() {
-        text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
-                new Text(input.name, 425, 602, pokeFont.getFont(30f), Color.red)
-        );
+        switch (Condivisa.level) {
+            case 0:
+                text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
+                        new Text(input.name, 425, 602, pokeFont.getFont(30f), Color.red));
+                break;
+            case 1:
+                text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
+                        new Text("Scegli i tuoi Pokémon.", 50, 585, pokeFont.getFont(30f), Color.black),
+                        new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, 585, pokeFont.getFont(30f), Color.red));
+                break;
+            case 2:
+                break;
+        }
         handler.tick();
     }
 
@@ -138,7 +149,6 @@ public class Game extends Canvas implements Runnable {
             case 0:
                 handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
                 handler.add(new TrainerFront(WIDTH / 2, 185, 2, 3));
-                //handler.add(new TrainerBack(WIDTH / 2, 185, 3));
 
                 texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
                 handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
@@ -146,11 +156,26 @@ public class Game extends Canvas implements Runnable {
                         texture.getSize(3).width,
                         texture.getSize(3).height, texture));
 
-                //statsText = new Text(5, 12, 15f, pokeFont, Color.black);
                 handler.add(text);
                 break;
             case 1:
+                handler.add(new Background("res/pokemon-menu/background-custom.png", 0, 0, WIDTH, HEIGHT));
+                texture = new Texture("res/pokemon-menu/pokemon-gray.png", 0, 0, 83, 55);
+
+                int number = new File("res/pokedex/xml").list().length + 7;
+                System.out.println(number);
+
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < number && j < 5; j++) {
+                        handler.add(new GenericObject(j * 175 + 45, i * 120 + 25,
+                                texture.getSize(2).width,
+                                texture.getSize(2).height, texture));
+                    }
+                }
+
+                handler.add(text);
                 break;
+
             case 2:
                 break;
         }

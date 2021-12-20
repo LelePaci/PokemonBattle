@@ -21,9 +21,11 @@ public class KeyInput extends KeyAdapter {
 
     private final Handler handler;
     public String name = "";
+    private Game game;
 
-    public KeyInput(Handler handler) {
+    public KeyInput(Game game, Handler handler) {
         this.handler = handler;
+        this.game = game;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class KeyInput extends KeyAdapter {
                     }
                     Condivisa.level++;
                     handler.clearLevel();
-                    //System.out.println(Condivisa.name);
+                    game.createLevel_InsertName(Condivisa.level);
                 }
                 break;
 
