@@ -139,7 +139,6 @@ public class Game extends Canvas implements Runnable {
         Graphics g = strategy.getDrawGraphics();
 
         handler.render(g);
-        input.paint(g);
         g.dispose();
 
         strategy.show();

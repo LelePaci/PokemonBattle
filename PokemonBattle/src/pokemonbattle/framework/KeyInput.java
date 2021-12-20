@@ -6,12 +6,12 @@
 package pokemonbattle.framework;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import pokemonbattle.main.*;
 
 /**
  *
@@ -20,7 +20,7 @@ import java.util.List;
 public class KeyInput extends KeyAdapter {
 
     private final Handler handler;
-    private final List<Character> lista = new ArrayList();
+    public String name = "";
 
     public KeyInput(Handler handler) {
         this.handler = handler;
@@ -29,36 +29,37 @@ public class KeyInput extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        System.out.println(key);
-        if (key >= 65 && key < 90) {
-            if (lista.size() < 10) {
-                lista.add((char) key);
-            }
-            System.out.println((char) key);
+        //System.out.println(key);
+        if (key == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
-        if (key == 8) {
-            if (lista.size() > 0) {
-                lista.remove(lista.size() - 1);
-            }
-            
+        switch (Condivisa.level) {
+            case 0:
+                if (key >= 65 && key < 90) {
+                    if (name.length() < 10) {
+                        name += (char) key;
+                    }
+                }
+                if (key == 8) {
+                    if (name.length() > 0) {
+                        name = name.substring(0, name.length() - 1);
+                    }
+                }
+                if (key == 10) {
+                    Condivisa.level++;
+                    handler.clearLevel();
+                }
+                break;
+
+            case 1:
+                break;
+            case 2:
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-    
-    public void paint(Graphics g){
-        char[] data = new char[lista.size()];
-        for (int i = 0; i < data.length; i++) {
-            data[i] = lista.get(i);
-        }
-        PokeFont font = new PokeFont();
-        //g.setFont(font.getFont());
-        g.setColor(Color.red);
-        g.setFont(font.getFont());
-        g.drawChars(data, 0, data.length, 425, 602);
-        
     }
 }
