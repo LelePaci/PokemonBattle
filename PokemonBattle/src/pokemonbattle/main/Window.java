@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokemonbattle.window;
+package pokemonbattle.main;
 
 import java.awt.Dimension;
 import javax.swing.JFrame;

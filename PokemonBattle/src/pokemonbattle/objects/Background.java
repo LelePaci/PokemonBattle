@@ -26,7 +26,7 @@ public class Background extends GameObject {
 
     @Override
     public void tick(LinkedList<GameObject> object) {
-
+        
     }
 
     @Override

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokemonbattle.window;
+package pokemonbattle.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.logging.Level;
@@ -27,6 +28,12 @@ public class Game extends Canvas implements Runnable {
 
     //Object
     private Handler handler;
+    private KeyInput input;
+
+    //Other
+    public static String stats = "";
+    private Text text = new Text();
+    private PokeFont pokeFont;
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
@@ -87,14 +94,14 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames + " TICKS: " + updates);
+                stats = "FPS: " + frames + " TICKS: " + updates;
+                //System.out.println(stats);
                 frames = 0;
                 updates = 0;
             }
         }
     }
 
-    KeyInput input;
     public void init() {
         handler = new Handler();
         input = new KeyInput(handler);
@@ -103,15 +110,23 @@ public class Game extends Canvas implements Runnable {
 
         handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
         handler.add(new TrainerFront(WIDTH / 2, 185, 2, 3));
+        //handler.add(new TrainerBack(WIDTH / 2, 185, 3));
 
         texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
         handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
                 (HEIGHT - texture.getSize(3).height - 5),
                 texture.getSize(3).width,
                 texture.getSize(3).height, texture));
+        pokeFont = new PokeFont();
+        //statsText = new Text(5, 12, 15f, pokeFont, Color.black);
+        handler.add(text);
+
     }
 
     public void tick() {
+        text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
+                new Text(input.name, 425, 602, pokeFont.getFont(30f), Color.red)
+        );
         handler.tick();
     }
 
@@ -126,6 +141,7 @@ public class Game extends Canvas implements Runnable {
         handler.render(g);
         input.paint(g);
         g.dispose();
+
         strategy.show();
     }
 }

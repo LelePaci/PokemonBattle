@@ -23,7 +23,7 @@ public class PokeFont {
     private Font pokeFont;
     public PokeFont() {
         try {
-            pokeFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/Pokemon-EM.ttf")).deriveFont(30f);
+            pokeFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/Pokemon-EM.ttf"));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(pokeFont);
         } catch (FileNotFoundException ex) {
@@ -33,7 +33,7 @@ public class PokeFont {
         }
     }
     
-    public Font getFont(){
-        return pokeFont;
+    public Font getFont(float size){
+        return pokeFont.deriveFont(size);
     }
 }
