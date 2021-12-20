@@ -106,21 +106,8 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         input = new KeyInput(handler);
         this.addKeyListener(input);
-        Texture texture;
-
-        handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
-        handler.add(new TrainerFront(WIDTH / 2, 185, 2, 3));
-        //handler.add(new TrainerBack(WIDTH / 2, 185, 3));
-
-        texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
-        handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
-                (HEIGHT - texture.getSize(3).height - 5),
-                texture.getSize(3).width,
-                texture.getSize(3).height, texture));
         pokeFont = new PokeFont();
-        //statsText = new Text(5, 12, 15f, pokeFont, Color.black);
-        handler.add(text);
-
+        createLevel_InsertName(Condivisa.level);
     }
 
     public void tick() {
@@ -142,5 +129,30 @@ public class Game extends Canvas implements Runnable {
         g.dispose();
 
         strategy.show();
+    }
+
+    public void createLevel_InsertName(int level) {
+        Texture texture;
+
+        switch (Condivisa.level) {
+            case 0:
+                handler.add(new Background("res/intro-screens/background.png", 0, 0, WIDTH, HEIGHT));
+                handler.add(new TrainerFront(WIDTH / 2, 185, 2, 3));
+                //handler.add(new TrainerBack(WIDTH / 2, 185, 3));
+
+                texture = new Texture("res/intro-screens/insert-name.png", 0, 0, 174, 46);
+                handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2,
+                        (HEIGHT - texture.getSize(3).height - 5),
+                        texture.getSize(3).width,
+                        texture.getSize(3).height, texture));
+
+                //statsText = new Text(5, 12, 15f, pokeFont, Color.black);
+                handler.add(text);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 }

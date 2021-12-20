@@ -46,8 +46,13 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 if (key == 10) {
+                    if (Condivisa.canChangeName) {
+                        Condivisa.name = name;
+                        Condivisa.canChangeName = false;
+                    }
                     Condivisa.level++;
                     handler.clearLevel();
+                    //System.out.println(Condivisa.name);
                 }
                 break;
 

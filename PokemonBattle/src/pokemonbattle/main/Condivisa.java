@@ -10,6 +10,7 @@ package pokemonbattle.main;
  * @author pacie
  */
 public class Condivisa {
+    public static boolean canChangeName = true;
     public static String name;
     public static int level = 0;
     // 0 -> inserimento nome
