@@ -57,7 +57,7 @@ public class KeyInput extends KeyAdapter {
                     game.createLevel_InsertName(Condivisa.level);
                 }
                 break;
-
+                
             case 1:
                 break;
             case 2:

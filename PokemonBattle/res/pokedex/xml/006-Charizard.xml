@@ -1,8 +1,17 @@
 <pokemon>
     <nome>Charizard</nome>
     <vita>300</vita>
-    <tipo>Fuoco, Volante</tipo>
-    <image>res/pokedex/images/charizard.png</image>
+    <tipi>
+        <tipo>Fuoco</tipo>
+        <tipo>Volante</tipo>
+    </tipi>
+    <debolezze>
+        <debolezza>Acqua</debolezza>
+        <debolezza>Elettro</debolezza>
+        <debolezza>Roccia</debolezza>
+    </debolezze>
+    <immagineFront>res/pokedex/images/charizard-front.png</immagineFront>
+    <immagineBack>res/pokedex/images/charizard-back.png</immagineBack>
     <mosse>
         <mossa>
             <nome>Graffio</nome>
@@ -29,5 +38,4 @@
             <utilizziMax>20</utilizziMax>
         </mossa>
     </mosse>
-    <status></status><!-- di base sarà vuoto -->
 </pokemon>

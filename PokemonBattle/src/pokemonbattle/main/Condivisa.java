@@ -11,7 +11,7 @@ package pokemonbattle.main;
  */
 public class Condivisa {
 
-    public static int level = 1;
+    public static int level = 0;
     // 0 -> inserimento nome
     // 1 -> scelta pokemon
     // 3 -> combattimento

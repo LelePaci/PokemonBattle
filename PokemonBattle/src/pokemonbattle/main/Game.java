@@ -149,7 +149,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void createLevel_InsertName(int level) {
-        Texture texture;
+        Texture texture = null;
 
         switch (Condivisa.level) {
             case 0:
@@ -166,19 +166,18 @@ public class Game extends Canvas implements Runnable {
                 break;
             case 1:
                 handler.add(new Background("res/pokemon-menu/background-custom.png", 0, 0, WIDTH, HEIGHT));
-                texture = new Texture("res/pokemon-menu/pokemon-gray.png", 0, 0, 83, 55);
+                int number = new File("res/pokedex/xml").list().length;
 
-                int number = new File("res/pokedex/xml").list().length + 7;
-                System.out.println(number);
-
-                for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < number && j < 5; j++) {
-                        handler.add(new GenericObject(j * 175 + 45, i * 120 + 25,
-                                texture.getSize(2).width,
-                                texture.getSize(2).height, texture));
+                int riga = 0;
+                int colonna = 0;
+                for (int i = 0; i < number; i++) {
+                    SelectPokemon select = new SelectPokemon(handler, texture, colonna * 175 + 45, riga * 120 + 25);
+                    colonna++;
+                    if (colonna == 5) {
+                        colonna = 0;
+                        riga++;
                     }
                 }
-
                 handler.add(text);
                 break;
 
