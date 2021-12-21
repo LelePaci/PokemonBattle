@@ -45,11 +45,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game = new Game();/*
         TCPServer s = new TCPServer();
         s.start();
         TCPClient c = new TCPClient();
-        c.start();
+        c.start();*/
     }
 
     public synchronized void start() {
@@ -166,20 +166,24 @@ public class Game extends Canvas implements Runnable {
                 break;
             case 1:
                 handler.add(new Background("res/pokemon-menu/background-custom.png", 0, 0, WIDTH, HEIGHT));
-                int number = new File("res/pokedex/xml").list().length;
-
-                int riga = 0;
-                int colonna = 0;
+                int number = Condivisa.pokedexCount;
+                int id = 0;
+                int row = 0;
+                int col = 0;
                 for (int i = 0; i < number; i++) {
-                    SelectPokemon select = new SelectPokemon(handler, texture, colonna * 175 + 45, riga * 120 + 25);
-                    colonna++;
-                    if (colonna == 5) {
-                        colonna = 0;
-                        riga++;
+                    SelectPokemon select = new SelectPokemon(handler, texture, col * 175 + 45, row * 120 + 25, i, "charizard");
+                    Condivisa.pokedex.add(select);
+                    handler.add(select);
+                    col++;
+                    if (col == 5) {
+                        col = 0;
+                        row++;
                     }
                 }
                 handler.add(text);
                 break;
+
+
 
             case 2:
                 break;

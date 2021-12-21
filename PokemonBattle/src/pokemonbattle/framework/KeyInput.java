@@ -5,12 +5,8 @@
  */
 package pokemonbattle.framework;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 import pokemonbattle.main.*;
 
 /**
@@ -57,8 +53,46 @@ public class KeyInput extends KeyAdapter {
                     game.createLevel_InsertName(Condivisa.level);
                 }
                 break;
-                
+
             case 1:
+                if (key == 39) {
+                    if (Condivisa.hoveredPokemonID + 1 < Condivisa.pokedexCount) {
+                        Condivisa.hoveredPokemonID += 1;
+                        System.out.println(Condivisa.hoveredPokemonID);
+                        refreshPokedex();
+                    }
+                }
+                if (key == 37) {
+                    if (Condivisa.hoveredPokemonID - 1 >= 0) {
+                        Condivisa.hoveredPokemonID -= 1;
+                        System.out.println(Condivisa.hoveredPokemonID);
+                        refreshPokedex();
+                    }
+                }
+                if (key == 40) {
+                    if (Condivisa.hoveredPokemonID + 5 < Condivisa.pokedexCount) {
+                        Condivisa.hoveredPokemonID += 5;
+                        System.out.println(Condivisa.hoveredPokemonID);
+                        refreshPokedex();
+                    }
+                }
+                if (key == 38) {
+                    if (Condivisa.hoveredPokemonID - 5 >= 0) {
+                        Condivisa.hoveredPokemonID -= 5;
+                        System.out.println(Condivisa.hoveredPokemonID);
+                        refreshPokedex();
+                    }
+                }
+                if (key == 10) {
+                    System.out.println("test");
+                    if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected()) {
+                        Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(true);
+                        Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(2);
+                    } else {
+                        Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(false);
+                        Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
+                    }
+                }
                 break;
             case 2:
                 break;
@@ -68,5 +102,18 @@ public class KeyInput extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    private void refreshPokedex() {
+        for (int i = 0; i < Condivisa.pokedex.size(); i++) {
+            if (!Condivisa.pokedex.get(i).isSelected()) {
+                Condivisa.pokedex.get(i).changeTexture(0);
+            }
+
+        }
+        if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected()) {
+            Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
+        }
+        
     }
 }

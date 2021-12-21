@@ -1,4 +1,4 @@
-package newpackage.util;
+package pokemonbattle.util;
 
 public class XMLParser {
 

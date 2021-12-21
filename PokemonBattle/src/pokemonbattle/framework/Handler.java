@@ -26,6 +26,7 @@ public class Handler {
                 temp.tick(object);
             }
         }
+        //System.out.println(object.size());
     }
 
     public void render(Graphics g) {
@@ -38,7 +39,6 @@ public class Handler {
             if (temp != null) {
                 temp.render(g);
             }
-            
         }
     }
 

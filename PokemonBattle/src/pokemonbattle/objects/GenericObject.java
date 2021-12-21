@@ -23,9 +23,13 @@ public class GenericObject extends GameObject {
     public void tick(LinkedList<GameObject> object) {
 
     }
-
+    
     @Override
     public void render(Graphics g) {
         g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
+    }
+    
+    public void changeTexture(Texture texture){
+        this.texture = texture;
     }
 }
