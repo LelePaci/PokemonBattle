@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
 import pokemonbattle.objects.*;
+import pokemonbattle.peer.TCPClient;
+import pokemonbattle.peer.TCPServer;
 
 /**
  *
@@ -44,6 +46,10 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
+        TCPServer s = new TCPServer();
+        s.start();
+        TCPClient c = new TCPClient();
+        c.start();
     }
 
     public synchronized void start() {
