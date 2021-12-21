@@ -96,37 +96,47 @@ FILE XML DI ESEMPIO:
 
 <!-- XML DEL POKEMON (sarà una classe)-->
 <pokemon>
-    <nome>Pansage</nome>
+    <nome>Charizard</nome>
     <vita>300</vita>
-    <tipo>erba</tipo>
+    <tipi>
+        <tipo>Fuoco</tipo>
+        <tipo>Volante</tipo>
+    </tipi>
+    <debolezze>
+        <debolezza>Acqua</debolezza>
+        <debolezza>Elettro</debolezza>
+        <debolezza>Roccia</debolezza>
+    </debolezze>
+    <immagineFront>res/pokedex/images/charizard-front.png</immagineFront>
+    <immagineBack>res/pokedex/images/charizard-back.png</immagineBack>
     <mosse>
         <mossa>
             <nome>Graffio</nome>
             <tipo>Normale</tipo>
-            <danni>30</danni>
-            <utilizziMax>30</utilizziMax>
+            <danni>15</danni>
+            <utilizziMax>35</utilizziMax>
         </mossa>
         <mossa>
-            <nome>Graffio</nome>
-            <tipo>Normale</tipo>
-            <danni>30</danni>
-            <utilizziMax>30</utilizziMax>
+            <nome>Braciere</nome>
+            <tipo>Fuoco</tipo>
+            <danni>20</danni>
+            <utilizziMax>40</utilizziMax>
         </mossa>
         <mossa>
-            <nome>Graffio</nome>
-            <tipo>Normale</tipo>
+            <nome>Lanciafiamme</nome>
+            <tipo>Fuoco</tipo>
             <danni>30</danni>
-            <utilizziMax>30</utilizziMax>
+            <utilizziMax>15</utilizziMax>
         </mossa>
         <mossa>
-            <nome>Graffio</nome>
-            <tipo>Normale</tipo>
+            <nome>Dragospiro</nome>
+            <tipo>Drago</tipo>
             <danni>30</danni>
-            <utilizziMax>30</utilizziMax>
+            <utilizziMax>20</utilizziMax>
         </mossa>
     </mosse>
-    <status></status><!-- di base sarà vuoto -->
 </pokemon>
+
 
 <!-- XML SCELTA DEL POKEMON  s -->
 <root>
@@ -135,28 +145,30 @@ FILE XML DI ESEMPIO:
         <nome>Pikachu</nome>
         <vita>200</vita>
         <tipo>Elettro</tipo>
-        <genere>?</genere>
-        <livello>10</livello>
         <status></status>
     </pokemon>
 </root>
 
 <!-- XML DURANTE I TURNI -->
 <!-- ATTACCO PEER 1 (ESEMPIO) a -->
-    <root>
+<root>
     <comando>a</comando>
     <nomeMossa>Fulmine</nomeMossa>
     <tipoMossa>Elettro</tipoMossa>
     <danni>30</danni>
-    <confuso>0/1</confuso>
-    </root>
+	<status>
+        <tipo>PAR</tipo>
+        <prob>23</prob> 
+    </status>
+</root>
     <!-- RISPOSTA ALL'ATTACCO PEER 2 (ESEMPIO) r -->
     <root>
         <comando>r</comando>
         <vitaRimanente>150</vitaRimanente>
-        <moltiplicatore>1</moltiplicatore>
-        <note>Il pokemon è stordito</note> <!-- va a cambiare lo status del pokemon -->
-    </root>
+        <moltiplicatore>1</moltiplicatore> <!-- 0-> danno base, 1 -> ridotto, 2 -> super efficacie, 3 -> critico, 4 -> non fa danno, 5 -> nessun cambiamento (solo per status confuso)  -->
+        <status>PAR</status>
+        <note>Il pokemon è stordito</note> <!--  -->
+</root>
     <!-- peer 1 e peer 2 si invertono ora -->
 
 <!-- AZIONE INVENTARIO i -->
@@ -171,6 +183,8 @@ FILE XML DI ESEMPIO:
     <root>
     <comando>f</comando>
     </root>
+
+
 <!-- CAMBIO POKEMON VOLONTARIO c -->
     <root>
     <comando>c</comando>
@@ -178,10 +192,10 @@ FILE XML DI ESEMPIO:
         <nome>Pikachu</nome>
         <vita>200</vita>
         <tipo>Elettro</tipo>
-        <genere>?</genere>
-        <livello>10</livello>
     </pokemon>
     </root>
+
+
 <!-- POKEMON SCONFITTO l peer1 -->
     <root>
         <comando>l</comando>
