@@ -85,12 +85,14 @@ public class KeyInput extends KeyAdapter {
                 }
                 if (key == 10) {
                     System.out.println("test");
-                    if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected()) {
+                    if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected() && Condivisa.chosenPokemon < 6) {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(true);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(2);
-                    } else {
+                        Condivisa.chosenPokemon++;
+                    } else if (Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected() && Condivisa.chosenPokemon > 0) {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(false);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
+                        Condivisa.chosenPokemon--;
                     }
                 }
                 break;
@@ -114,6 +116,6 @@ public class KeyInput extends KeyAdapter {
         if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected()) {
             Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
         }
-        
+
     }
 }

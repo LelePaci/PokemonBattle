@@ -125,8 +125,8 @@ public class Game extends Canvas implements Runnable {
                 break;
             case 1:
                 text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
-                        new Text("Scegli i tuoi Pokémon.", 50, 585, pokeFont.getFont(30f), Color.black),
-                        new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, 585, pokeFont.getFont(30f), Color.red));
+                        new Text("Scegli i tuoi Pokémon.", 50, 590, pokeFont.getFont(30f), Color.black),
+                        new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, 590, pokeFont.getFont(30f), Color.red));
                 break;
             case 2:
                 break;
@@ -165,7 +165,7 @@ public class Game extends Canvas implements Runnable {
                 handler.add(text);
                 break;
             case 1:
-                handler.add(new Background("res/pokemon-menu/background-custom.png", 0, 0, WIDTH, HEIGHT));
+                handler.add(new Background("res/pokemon-menu/background.png", 0, 0, WIDTH, HEIGHT));
                 int number = Condivisa.pokedexCount;
                 int id = 0;
                 int row = 0;
@@ -180,10 +180,19 @@ public class Game extends Canvas implements Runnable {
                         row++;
                     }
                 }
+                
+                texture = new Texture("res/pokemon-menu/text-field.png", 0, 0, 180, 28);
+                handler.add(new GenericObject(20, HEIGHT - texture.getSize(4).height - 5,
+                        texture.getSize(4).width + 40,
+                        texture.getSize(4).height, texture));
+                handler.add(text);                
+                
+                texture = new Texture("res/pokemon-menu/button.png", 0, 0, 54, 20);
+                handler.add(new GenericObject(WIDTH - texture.getSize(3).width - 10, HEIGHT - texture.getSize(3).height - 30,
+                        texture.getSize(3).width,
+                        texture.getSize(3).height, texture));
                 handler.add(text);
                 break;
-
-
 
             case 2:
                 break;
