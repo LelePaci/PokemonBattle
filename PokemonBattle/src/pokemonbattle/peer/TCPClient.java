@@ -15,11 +15,11 @@ public class TCPClient extends Thread {
     public void run() {
         Socket socket = null;
         try {
-            InetAddress addr = InetAddress.getByName("localhost");
+            InetAddress addr = InetAddress.getByName("82.48.148.233");
             socket = new Socket(addr, 4269);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-
+            System.out.println("test");
             out.println("CIAO");
             String inputLine = in.readLine();
             System.out.println(inputLine);

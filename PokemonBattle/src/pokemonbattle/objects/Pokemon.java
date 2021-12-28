@@ -20,7 +20,7 @@ public class Pokemon extends GameObject{
     private String[] type;
     private Mosse[] mosse = new Mosse[4];  
 
-    public Pokemon() {
+    public Pokemon(String Nome,int Vita,Mosse Mossa1,Mosse Mossa2,Mosse Mossa3,Mosse Mossa4){
         super(0, 0);
     }
     
