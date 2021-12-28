@@ -18,7 +18,7 @@ import pokemonbattle.objects.Pokemon;
 public class XMLParser {
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-
+               String Azione= XMLParser.Azione('e');//ANDRA INSERITO IL COMANDO 
         //XML POKEMON
         String POKEMON = "<pokemon>"
                 + "<nome>Charizard</nome>"
@@ -69,7 +69,6 @@ public class XMLParser {
         Document doc;
         doc = (Document) dBuilder.parse(is);
         doc.getDocumentElement().normalize();
-
         //POKEMON
         String nome = doc.getElementsByTagName("nome").item(0).getTextContent();
         String vita = doc.getElementsByTagName("vita").item(0).getTextContent();
@@ -137,9 +136,32 @@ public class XMLParser {
 
         }
     }
-    public Pokemon GetPokemon(String XML){
+        public static String Azione(char Comando){
+            String Azione="";
+            if(Comando=='s'){
+                Azione="Scelta";
+            }else if(Comando=='a'){
+                Azione="Attacco";
+            }else if(Comando=='r'){
+                Azione="Risposta";
+            }else if(Comando=='i'){
+                Azione="Inventario";
+            }else if(Comando=='f'){
+                Azione="Resa";
+            }else if(Comando=='c'){
+                Azione="Cambio";
+            }else if(Comando=='l'){
+                Azione="PKMSconfitto";
+            }else if(Comando=='e'){
+                Azione="Status";
+            }else if(Comando=='n'){
+                Azione="Fine";
+            }
+            return Azione;
+        }
+    /*public Pokemon GetPokemon(){
        Pokemon tmp=new Pokemon;
         
        return tmp;
-    }
+    }*/
 }
