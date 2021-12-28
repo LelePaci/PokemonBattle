@@ -8,7 +8,10 @@ package pokemonbattle.framework;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -19,7 +22,7 @@ public class Text extends GameObject {
     public String text;
     public Font font = null;
     public Color color;
-    public Text[] allTexts;
+    public List<Text> allTexts = new ArrayList<>();
 
     public Text() {
         super(0, 0);
@@ -33,8 +36,11 @@ public class Text extends GameObject {
     }
 
     public void setData(Text... data) {
-        allTexts = new Text[data.length];
-        System.arraycopy(data, 0, allTexts, 0, data.length);
+        allTexts.clear();
+        allTexts.addAll(Arrays.asList(data));
+    }
+    public void addData(Text data){
+        allTexts.add(data);
     }
 
     @Override
@@ -44,8 +50,8 @@ public class Text extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        for (int i = 0; i < allTexts.length; i++) {
-            Text temp = allTexts[i];
+        for (int i = 0; i < allTexts.size(); i++) {
+            Text temp = allTexts.get(i);
             g.setColor(temp.color);
             g.setFont(temp.font);
             g.drawString(temp.text, (int) temp.x, (int) temp.y);

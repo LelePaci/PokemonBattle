@@ -58,33 +58,28 @@ public class KeyInput extends KeyAdapter {
                 if (key == 39) {
                     if (Condivisa.hoveredPokemonID + 1 < Condivisa.pokedexCount) {
                         Condivisa.hoveredPokemonID += 1;
-                        System.out.println(Condivisa.hoveredPokemonID);
                         refreshPokedex();
                     }
                 }
                 if (key == 37) {
                     if (Condivisa.hoveredPokemonID - 1 >= 0) {
                         Condivisa.hoveredPokemonID -= 1;
-                        System.out.println(Condivisa.hoveredPokemonID);
                         refreshPokedex();
                     }
                 }
                 if (key == 40) {
                     if (Condivisa.hoveredPokemonID + 5 < Condivisa.pokedexCount) {
                         Condivisa.hoveredPokemonID += 5;
-                        System.out.println(Condivisa.hoveredPokemonID);
                         refreshPokedex();
                     }
                 }
                 if (key == 38) {
                     if (Condivisa.hoveredPokemonID - 5 >= 0) {
                         Condivisa.hoveredPokemonID -= 5;
-                        System.out.println(Condivisa.hoveredPokemonID);
                         refreshPokedex();
                     }
                 }
                 if (key == 10) {
-                    System.out.println("test");
                     if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected() && Condivisa.chosenPokemon < 6) {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(true);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(2);
@@ -93,6 +88,9 @@ public class KeyInput extends KeyAdapter {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(false);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
                         Condivisa.chosenPokemon--;
+                    }
+                    if (Condivisa.chosenPokemon == 6) {
+                         handler.clearLevel();
                     }
                 }
                 break;
@@ -116,6 +114,5 @@ public class KeyInput extends KeyAdapter {
         if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected()) {
             Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
         }
-
     }
 }

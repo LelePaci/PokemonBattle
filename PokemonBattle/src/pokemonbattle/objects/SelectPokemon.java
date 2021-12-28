@@ -86,4 +86,8 @@ public class SelectPokemon extends GameObject {
     public boolean isSelected() {
         return selected;
     }
+    
+    public int getID(){
+        return id;
+    }
 }

@@ -1,4 +1,4 @@
-package xmlparser;
+package pokemonbattle.util;
 
 import java.io.IOException;
 import java.io.StringReader;

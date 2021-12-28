@@ -9,7 +9,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
@@ -35,8 +34,8 @@ public class Game extends Canvas implements Runnable {
 
     //Other
     public static String stats = "";
-    private Text text = new Text();
-    private PokeFont pokeFont;
+    private final Text text = new Text();
+    private final PokeFont pokeFont = Condivisa.pokeFont;
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
@@ -113,7 +112,6 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         input = new KeyInput(this, handler);
         this.addKeyListener(input);
-        pokeFont = new PokeFont();
         createLevel_InsertName(Condivisa.level);
     }
 
@@ -124,9 +122,10 @@ public class Game extends Canvas implements Runnable {
                         new Text(input.name, 425, 602, pokeFont.getFont(30f), Color.red));
                 break;
             case 1:
+                int textHeight = 585;
                 text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
-                        new Text("Scegli i tuoi Pokémon.", 50, 590, pokeFont.getFont(30f), Color.black),
-                        new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, 590, pokeFont.getFont(30f), Color.red));
+                        new Text("Scegli i tuoi Pokémon.", 50, textHeight, pokeFont.getFont(30f), Color.black),
+                        new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, textHeight, pokeFont.getFont(30f), Color.red));
                 break;
             case 2:
                 break;
@@ -165,9 +164,8 @@ public class Game extends Canvas implements Runnable {
                 handler.add(text);
                 break;
             case 1:
-                handler.add(new Background("res/pokemon-menu/background.png", 0, 0, WIDTH, HEIGHT));
+                handler.add(new Background("res/pokemon-menu/background-custom.png", 0, 0, WIDTH, HEIGHT));
                 int number = Condivisa.pokedexCount;
-                int id = 0;
                 int row = 0;
                 int col = 0;
                 for (int i = 0; i < number; i++) {
@@ -180,20 +178,13 @@ public class Game extends Canvas implements Runnable {
                         row++;
                     }
                 }
-                
+
                 texture = new Texture("res/pokemon-menu/text-field.png", 0, 0, 180, 28);
-                handler.add(new GenericObject(20, HEIGHT - texture.getSize(4).height - 5,
-                        texture.getSize(4).width + 40,
+                handler.add(new GenericObject(8, HEIGHT - texture.getSize(4).height - 8,
+                        texture.getSize(4).width + 222,
                         texture.getSize(4).height, texture));
-                handler.add(text);                
-                
-                texture = new Texture("res/pokemon-menu/button.png", 0, 0, 54, 20);
-                handler.add(new GenericObject(WIDTH - texture.getSize(3).width - 10, HEIGHT - texture.getSize(3).height - 30,
-                        texture.getSize(3).width,
-                        texture.getSize(3).height, texture));
                 handler.add(text);
                 break;
-
             case 2:
                 break;
         }

@@ -8,6 +8,7 @@ package pokemonbattle.main;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import pokemonbattle.framework.*;
 import pokemonbattle.objects.*;
 
 /**
@@ -16,7 +17,7 @@ import pokemonbattle.objects.*;
  */
 public class Condivisa {
 
-    public static int level = 0;
+    public static int level = 1;
     // 0 -> inserimento nome
     // 1 -> scelta pokemon
     // 3 -> combattimento
@@ -26,7 +27,7 @@ public class Condivisa {
     public static final int pokedexCount = new File("res/pokedex/xml").list().length + 20;
     public static int chosenPokemon = 0;
     public static int hoveredPokemonID = 0; // per key input e poi aggiornamento grafica della selezione del pokemon 
-    //public static int[] selectedPokemonID = new int[6];
     public static List<SelectPokemon> pokedex = new ArrayList();
-
+    public static List<SelectPokemon> selectedPokemon = new ArrayList();
+    public static final PokeFont pokeFont = new PokeFont();
 }
