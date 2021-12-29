@@ -33,6 +33,12 @@ public class Pokemon extends GameObject {
     public Pokemon(String Nome, int Vita, String imagePath, Mossa Mossa1, Mossa Mossa2, Mossa Mossa3, Mossa Mossa4, String... types) {
         super(0, 0);
     }
+
+    public Pokemon(String Nome, int Vita) {
+        super(0, 0);
+        name = Nome;
+        life = Vita;
+    }
     
 
     public String getName() {

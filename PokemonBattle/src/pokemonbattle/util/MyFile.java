@@ -39,4 +39,16 @@ public class MyFile {
         }
         return true;
     }
+    	public static String[] getListOfFiles(String path) {
+        File directory = new File(path);
+        File files[] = directory.listFiles();
+        String filesName[] = new String[files.length];
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                filesName[i] = files[i].getName();
+            }
+        }
+        return filesName;
+    }
+	
 }
