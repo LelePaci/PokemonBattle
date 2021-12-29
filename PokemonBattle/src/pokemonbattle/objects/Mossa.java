@@ -13,14 +13,19 @@ import pokemonbattle.framework.*;
  *
  * @author pacie
  */
-public class Mosse extends GameObject{
+public class Mossa extends GameObject{
     
-    private String name;
-    private int pp;
-    private int damage;
+    private String nome;
+    private String tipo;
+    private int utilizzi;
+    private int danni;
 
-    public Mosse() {
+    public Mossa(String nome, String tipo, int utilizzi, int danni) {
         super(0, 0);
+        this.nome = nome;
+        this.tipo = tipo;
+        this.utilizzi = utilizzi;
+        this.danni = danni;
     }
     
     @Override
