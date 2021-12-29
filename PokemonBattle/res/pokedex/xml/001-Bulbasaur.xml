@@ -1,41 +1,42 @@
 <pokemon>
-    <nome>Charizard</nome>
-    <vita>300</vita>
+    <nome>Bulbasaur</nome>
+    <vita>200</vita>
     <tipi>
-        <tipo>Fuoco</tipo>
-        <tipo>Volante</tipo>
+        <tipo>Erba</tipo>
+        <tipo>Veleno</tipo>
     </tipi>
     <debolezze>
-        <debolezza>Acqua</debolezza>
-        <debolezza>Elettro</debolezza>
-        <debolezza>Roccia</debolezza>
+        <debolezza>Fuoco</debolezza>
+        <debolezza>Volante</debolezza>
+        <debolezza>Psico</debolezza>
+        <debolezza>Ghiaccio</debolezza>
     </debolezze>
-    <immagineFront>res/pokedex/images/charizard-front.png</immagineFront>
-    <immagineBack>res/pokedex/images/charizard-back.png</immagineBack>
+    <immagineFront>res/pokedex/images/bulbasaur-front.png</immagineFront>
+    <immagineBack>res/pokedex/images/bulbasaur-back.png</immagineBack>
     <mosse>
         <mossa>
-            <nome>Graffio</nome>
+            <nome>Azione</nome>
             <tipo>Normale</tipo>
             <danni>15</danni>
             <utilizziMax>35</utilizziMax>
         </mossa>
         <mossa>
-            <nome>Braciere</nome>
-            <tipo>Fuoco</tipo>
+            <nome>Fangobomba</nome>
+            <tipo>Veleno</tipo>
+            <danni>40</danni>
+            <utilizziMax>10</utilizziMax>
+        </mossa>
+        <mossa>
+            <nome>Foglielama</nome>
+            <tipo>Erba</tipo>
+            <danni>30</danni>
+            <utilizziMax>25</utilizziMax>
+        </mossa>
+        <mossa>
+            <nome>DoppiaSberla</nome>
+            <tipo>Normale</tipo>
             <danni>20</danni>
-            <utilizziMax>40</utilizziMax>
-        </mossa>
-        <mossa>
-            <nome>Lanciafiamme</nome>
-            <tipo>Fuoco</tipo>
-            <danni>30</danni>
             <utilizziMax>15</utilizziMax>
-        </mossa>
-        <mossa>
-            <nome>Dragospiro</nome>
-            <tipo>Drago</tipo>
-            <danni>30</danni>
-            <utilizziMax>20</utilizziMax>
         </mossa>
     </mosse>
 </pokemon>

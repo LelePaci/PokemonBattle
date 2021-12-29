@@ -14,21 +14,21 @@
     <immagineBack>res/pokedex/images/charizard-back.png</immagineBack>
     <mosse>
         <mossa>
-            <nome>Graffio</nome>
+            <nome>Fuocobomba</nome>
             <tipo>Normale</tipo>
-            <danni>15</danni>
+            <danni>30</danni>
             <utilizziMax>35</utilizziMax>
         </mossa>
         <mossa>
-            <nome>Braciere</nome>
+            <nome>Aerassalto</nome>
             <tipo>Fuoco</tipo>
-            <danni>20</danni>
+            <danni>25</danni>
             <utilizziMax>40</utilizziMax>
         </mossa>
         <mossa>
             <nome>Lanciafiamme</nome>
             <tipo>Fuoco</tipo>
-            <danni>30</danni>
+            <danni>20</danni>
             <utilizziMax>15</utilizziMax>
         </mossa>
         <mossa>
