@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pokemonbattle.framework.*;
 import pokemonbattle.objects.*;
+import pokemonbattle.util.*;
 
 /**
  *
@@ -17,17 +18,20 @@ import pokemonbattle.objects.*;
  */
 public class Condivisa {
 
-    public static int level = 1;
+    public static int level = 2;
     // 0 -> inserimento nome
     // 1 -> scelta pokemon
     // 3 -> combattimento
 
     public static boolean canChangeName = true;
     public static String name;
-    public static final int pokedexCount = new File("res/pokedex/xml").list().length + 20;
+    public static final String pokedexPath = "res/pokedex/xml";
+    public static final int pokedexCount = MyFile.CountElement(pokedexPath);
     public static int chosenPokemon = 0;
     public static int hoveredPokemonID = 0; // per key input e poi aggiornamento grafica della selezione del pokemon 
     public static List<SelectPokemon> pokedex = new ArrayList();
     public static List<SelectPokemon> selectedPokemon = new ArrayList();
     public static final PokeFont pokeFont = new PokeFont();
+    
+    
 }

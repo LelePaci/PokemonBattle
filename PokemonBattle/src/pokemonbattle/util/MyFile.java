@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 public class MyFile {
 
     public static String ReadFileXML(String Percorso) throws FileNotFoundException, IOException {
@@ -20,7 +19,7 @@ public class MyFile {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-            return stringBuilder.toString(); 
+            return stringBuilder.toString();
         } finally {
             reader.close();
         }
@@ -39,7 +38,8 @@ public class MyFile {
         }
         return true;
     }
-    	public static String[] getListOfFiles(String path) {
+
+    public static String[] getListOfFiles(String path) {
         File directory = new File(path);
         File files[] = directory.listFiles();
         String filesName[] = new String[files.length];
@@ -50,5 +50,4 @@ public class MyFile {
         }
         return filesName;
     }
-	
 }

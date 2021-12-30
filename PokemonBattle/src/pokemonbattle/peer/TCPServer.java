@@ -15,6 +15,7 @@ public class TCPServer extends Thread {
     public void run() {
         ServerSocket serverSocket;
         try {
+            System.out.println("Server started");
             serverSocket = new ServerSocket(4269);
             Socket clientSocket = serverSocket.accept();
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);

@@ -23,9 +23,9 @@ public class TCPClient extends Thread {
             out.println("CIAO");
             String inputLine = in.readLine();
             System.out.println(inputLine);
-            out.println("exit");
-            inputLine = in.readLine();
-            System.out.println(inputLine);
+            //out.println("exit");
+            //inputLine = in.readLine();
+            //System.out.println(inputLine);
             socket.close();
         } catch (IOException ex) {
         } finally {

@@ -17,15 +17,14 @@ import pokemonbattle.objects.Mossa;
 import pokemonbattle.objects.Pokemon;
 
 public class XMLParser {
-    public XMLParser() {
-    }
+
     private Document doc;
     private DocumentBuilder dBuilder;
 
-    public XMLParser(String toParse) {
+    public XMLParser() {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            dBuilder = dbFactory.newDocumentBuilder();
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,11 +82,11 @@ public class XMLParser {
                 String PokemonSconfitto = doc.getElementsByTagName("pokemon").item(0).getTextContent();
                 break;
             case "e":
-                 String PokemonSelezionato = doc.getElementsByTagName("pokemon").item(0).getTextContent();
-                 String StatusPKM = doc.getElementsByTagName("status").item(0).getTextContent();
-                 String AggiuntaPKM = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
-                 String DpsPKM = doc.getElementsByTagName("dps").item(0).getTextContent();
-                 String TipoPKM = doc.getElementsByTagName("tipo").item(0).getTextContent();
+                String PokemonSelezionato = doc.getElementsByTagName("pokemon").item(0).getTextContent();
+                String StatusPKM = doc.getElementsByTagName("status").item(0).getTextContent();
+                String AggiuntaPKM = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
+                String DpsPKM = doc.getElementsByTagName("dps").item(0).getTextContent();
+                String TipoPKM = doc.getElementsByTagName("tipo").item(0).getTextContent();
                 break;
             case "f":
                 //FINE LOTTA
@@ -96,6 +95,7 @@ public class XMLParser {
                 break;
         }
     }
+
     public Pokemon getPokemon(String toParse) {
         Pokemon pokemon = null;
         try {
