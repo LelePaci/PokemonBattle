@@ -5,16 +5,15 @@
  */
 package pokemonbattle.main;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pokemonbattle.framework.*;
 import pokemonbattle.objects.*;
-import pokemonbattle.peer.TCPClient;
-import pokemonbattle.peer.TCPServer;
+import pokemonbattle.peer.*;
+import pokemonbattle.util.*;
 
 /**
  *
@@ -36,6 +35,7 @@ public class Game extends Canvas implements Runnable {
     public static String stats = "";
     private final Text text = new Text();
     private final PokeFont pokeFont = Condivisa.pokeFont;
+    private XMLParser parser = new XMLParser();
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
@@ -45,10 +45,10 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-        TCPServer s = new TCPServer();
-        s.start();
-        /*TCPClient c = new TCPClient();
-        c.start();*/
+//        TCPServer s = new TCPServer();
+//        s.start();
+//        TCPClient c = new TCPClient();
+//        c.start();
     }
 
     public synchronized void start() {
@@ -112,7 +112,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         input = new KeyInput(this, handler);
         this.addKeyListener(input);
-        createLevel_InsertName(Condivisa.level);
+        createLevel(Condivisa.level);
     }
 
     public void tick() {
@@ -128,6 +128,11 @@ public class Game extends Canvas implements Runnable {
                         new Text("Ancora " + (6 - Condivisa.chosenPokemon), 315, textHeight, pokeFont.getFont(30f), Color.red));
                 break;
             case 2:
+                text.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
+                        new Text("Inserisci indirizzo IP", 375, 75, pokeFont.getFont(30f), Color.black),
+                        new Text(input.ipAddress, 420, 125, pokeFont.getFont(30f), Color.red)
+                
+                );
                 break;
         }
         handler.tick();
@@ -147,7 +152,7 @@ public class Game extends Canvas implements Runnable {
         strategy.show();
     }
 
-    public void createLevel_InsertName(int level) {
+    public void createLevel(int level) {
         Texture texture = null;
 
         switch (Condivisa.level) {
@@ -168,6 +173,16 @@ public class Game extends Canvas implements Runnable {
                 int number = Condivisa.pokedexCount;
                 int row = 0;
                 int col = 0;
+
+//                for (int i = 0; i < number; i++) {
+//                    System.out.println(MyFile.getListOfFiles(Condivisa.pokedexPath)[i]);
+//                    try {
+//                        Pokemon temp = parser.getPokemon(MyFile.ReadFileXML(Condivisa.pokedexPath + "/" + MyFile.getListOfFiles(Condivisa.pokedexPath)[0]));
+//                        temp.test();
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//               }
                 for (int i = 0; i < number; i++) {
                     SelectPokemon select = new SelectPokemon(handler, texture, col * 175 + 45, row * 120 + 25, i, "charizard");
                     Condivisa.pokedex.add(select);
@@ -185,7 +200,19 @@ public class Game extends Canvas implements Runnable {
                         texture.getSize(4).height, texture));
                 handler.add(text);
                 break;
+
             case 2:
+                int max = MyFile.CountElement("res/background-images");
+                int rand = (int) (Math.random() * max) + 1;
+                handler.add(new Background("res/background-images/" + rand + ".png", 0, 0, WIDTH, HEIGHT));
+                
+                texture = new Texture("res/intro-screens/insert-empty.png", 0, 0, 174, 46);
+                handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2, 20,
+                        texture.getSize(3).width,
+                        texture.getSize(3).height, texture));
+                
+                
+                handler.add(text);
                 break;
         }
     }
