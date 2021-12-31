@@ -5,7 +5,7 @@
  */
 package pokemonbattle.peer;
 
-import org.apache.commons.validator.routines.InetAddressValidator;
+//import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**
  *
@@ -14,7 +14,7 @@ import org.apache.commons.validator.routines.InetAddressValidator;
 public class Connection {
 
     public static void validateFromString(String address) {
-        InetAddressValidator validator = new InetAddressValidator();
+        //InetAddressValidator validator = new InetAddressValidator();
         if (validator.isValidInet4Address(address)) {
             System.out.print("The IP address " + address + " is valid");
         }else{

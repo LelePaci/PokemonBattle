@@ -111,7 +111,7 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 if (key == 10) {
-                    Connection.validateFromString(ipAddress);
+                    //Connection.validateFromString(ipAddress);
                 }
                 System.out.println(ipAddress);
                 break;
