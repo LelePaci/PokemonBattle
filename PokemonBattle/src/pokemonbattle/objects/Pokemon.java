@@ -25,13 +25,9 @@ public class Pokemon extends GameObject {
         super(0, 0);
         this.name = Nome;
         this.life = Vita;
-        System.arraycopy(type, 0, this.type, 0, type.length);
-        System.arraycopy(debolezze, 0, this.debolezze, 0, debolezze.length);
-        System.arraycopy(mosse, 0, this.mosse, 0, mosse.length);
-    }
-
-    public Pokemon(String Nome, int Vita, String imagePath, Mossa Mossa1, Mossa Mossa2, Mossa Mossa3, Mossa Mossa4, String... types) {
-        super(0, 0);
+        this.type = type;
+        this.debolezze = debolezze;
+        this.mosse  = mosse;
     }
 
     public Pokemon(String Nome, int Vita) {
@@ -40,7 +36,6 @@ public class Pokemon extends GameObject {
         life = Vita;
     }
     
-
     public String getName() {
         return name;
     }

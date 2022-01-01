@@ -19,17 +19,20 @@ public class KeyInput extends KeyAdapter {
     private final Handler handler;
     public String name = "";
     public String ipAddress = "";
-    private Game game;
+    private final Game game;
+    private final Text text;
 
-    public KeyInput(Game game, Handler handler) {
+    public KeyInput(Game game, Handler handler, Text text) {
         this.handler = handler;
         this.game = game;
+        this.text = text;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 //        System.out.println(key);
+//        System.out.println((char) key);
         if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
@@ -85,10 +88,12 @@ public class KeyInput extends KeyAdapter {
                     if (!Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected() && Condivisa.chosenPokemon < 6) {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(true);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(2);
+                        Condivisa.selectedPokemon.add(Condivisa.pokedex.get(Condivisa.hoveredPokemonID).getPokemon());
                         Condivisa.chosenPokemon++;
                     } else if (Condivisa.pokedex.get(Condivisa.hoveredPokemonID).isSelected() && Condivisa.chosenPokemon > 0) {
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).setSelected(false);
                         Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
+                        Condivisa.selectedPokemon.remove(Condivisa.pokedex.get(Condivisa.hoveredPokemonID).getPokemon());
                         Condivisa.chosenPokemon--;
                     }
                     if (Condivisa.chosenPokemon == 6) {
@@ -98,22 +103,29 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 break;
-                
+
             case 2:
                 if (key >= 48 && key <= 57 || key == 46) {
                     if (ipAddress.length() < 15) {
                         ipAddress += (char) key;
                     }
                 }
+                if (key >= 96 && key <= 105 || key == 110) {
+                    if (key != 110) {
+                        ipAddress += key - 96;
+                    } else {
+                        ipAddress +=".";
+                    }
+                }
+
                 if (key == 8) {
                     if (ipAddress.length() > 0) {
                         ipAddress = ipAddress.substring(0, ipAddress.length() - 1);
                     }
                 }
                 if (key == 10) {
-                    //Connection.validateFromString(ipAddress);
+                    Connection.validateFromString(ipAddress);
                 }
-                System.out.println(ipAddress);
                 break;
         }
     }

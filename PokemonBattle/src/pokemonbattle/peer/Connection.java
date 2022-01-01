@@ -5,7 +5,7 @@
  */
 package pokemonbattle.peer;
 
-//import org.apache.commons.validator.routines.InetAddressValidator;
+import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**
  *
@@ -14,11 +14,11 @@ package pokemonbattle.peer;
 public class Connection {
 
     public static void validateFromString(String address) {
-        //InetAddressValidator validator = new InetAddressValidator();
+        InetAddressValidator validator = new InetAddressValidator();
         if (validator.isValidInet4Address(address)) {
-            System.out.print("The IP address " + address + " is valid");
+            System.out.println("L'indirizzo IP: " + address + " è valido");
         }else{
-            System.out.print("The IP address " + address + " isn't valid");
+            System.out.println("L'indirizzo IP: " + address + " non è valido");
         }
     }
 }

@@ -8,7 +8,6 @@ package pokemonbattle.objects;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import pokemonbattle.framework.*;
-import pokemonbattle.main.*;
 
 /**
  *
@@ -23,14 +22,14 @@ public class SelectPokemon extends GameObject {
     private boolean selected = false;
     private GenericObject bg;
     private GenericObject pkmn;
-    private String name;
+    private final Pokemon pokemon;
 
-    public SelectPokemon(Handler handler, Texture texture, int x, int y, int id, String name) {
+    public SelectPokemon(Handler handler, Texture texture, int x, int y, int id, Pokemon pokemon) {
         super(x, y);
         this.handler = handler;
         this.texture = texture;
         this.id = id;
-        this.name = name;
+        this.pokemon = pokemon;
         init();
     }
 
@@ -44,7 +43,10 @@ public class SelectPokemon extends GameObject {
         bg = new GenericObject(x, y,
                 texture.getSize(2).width,
                 texture.getSize(2).height, texture);
-        texture = new Texture("res/pokedex/images/charizard-front.png", 0, 0, 64, 64);
+
+        String name = pokemon.getName();
+        System.out.println("Added Pokemon: " + name);
+        texture = new Texture("res/pokedex/images/" + name.toLowerCase() + "-front.png", 0, 0, 64, 64);
         relX = (int) x + 10;
         relY = (int) y + 10;
         pkmn = new GenericObject(relX, relY,
@@ -86,8 +88,20 @@ public class SelectPokemon extends GameObject {
     public boolean isSelected() {
         return selected;
     }
-    
-    public int getID(){
+
+    public int getID() {
         return id;
+    }
+    
+    public Pokemon getPokemon(){
+        return pokemon;
+    }
+
+    public int getRelX() {
+        return relX;
+    }
+
+    public int getRelY() {
+        return relY;
     }
 }
