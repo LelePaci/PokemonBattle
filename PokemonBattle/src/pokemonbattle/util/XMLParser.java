@@ -20,6 +20,7 @@ public class XMLParser {
 
     private Document doc;
     private DocumentBuilder dBuilder;
+    private String xml = "";
 
     public XMLParser() {
         try {
@@ -30,7 +31,9 @@ public class XMLParser {
         }
     }
 
-    public void AzioneXML(String XML) throws ParserConfigurationException, SAXException, IOException {
+    public static void AzioneXML(String XML) throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         InputSource is = new InputSource(new StringReader(XML));
         Document doc;
         doc = (Document) dBuilder.parse(is);
@@ -189,5 +192,104 @@ public class XMLParser {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pokemon;
+    }
+
+    public void parseString(String xml) {
+        try {
+            this.xml = xml;
+            InputSource is = new InputSource(new StringReader(this.xml));
+            doc = (Document) dBuilder.parse(is);
+            doc.getDocumentElement().normalize();
+        } catch (SAXException | IOException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getComando() {
+        String Comando = doc.getElementsByTagName("comando").item(0).getTextContent();
+        return Comando;
+    }
+
+    public String getNomeAllenatore() {
+        String Allenatore = doc.getElementsByTagName("nome").item(0).getTextContent();
+        return Allenatore;
+    }
+
+    public String getNomePokemon() {
+        String Nome = "";
+        if (doc.getElementsByTagName("nome").getLength() > 0) {
+            Nome = doc.getElementsByTagName("nome").item(0).getTextContent();
+        } else {
+            Nome = doc.getElementsByTagName("pokemon").item(0).getTextContent();
+        }
+        return Nome;
+    }
+
+    public int getVitaPokemon() {
+        String Vita = doc.getElementsByTagName("vita").item(0).getTextContent();
+        return Integer.parseInt(Vita);
+    }
+
+    public String getTipoPokemon() {
+        String Tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
+        return Tipo;
+    }
+
+    public String getNomeMossa() {
+        String NomeMossa = doc.getElementsByTagName("nomeMossa").item(0).getTextContent();
+        return NomeMossa;
+    }
+
+    public String getTipoMossa() {
+        String TipoMossa = doc.getElementsByTagName("tipoMossa").item(0).getTextContent();
+        return TipoMossa;
+    }
+
+    public int getDanniMossa() {
+        String Danni = doc.getElementsByTagName("danni").item(0).getTextContent();
+        return Integer.parseInt(Danni);
+    }
+
+    public String getStatus() {
+        String tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
+        String Danni = doc.getElementsByTagName("danni").item(0).getTextContent();
+        return (tipo + ";" + Danni);
+    }
+
+    public String getVitaRimanente() {
+        String vitaRimanente = doc.getElementsByTagName("vitaRimanente").item(0).getTextContent();
+        return (vitaRimanente);
+    }
+
+    public String getMoltiplicatore() {
+        String moltiplicatore = doc.getElementsByTagName("moltiplicatore").item(0).getTextContent();
+        return (moltiplicatore);
+    }
+
+    public String getStatusVita() {
+        String status = doc.getElementsByTagName("status").item(0).getTextContent();
+        return (status);
+    }
+
+    public String getNote() {
+        String note = doc.getElementsByTagName("note").item(0).getTextContent();
+        return (note);
+    }
+
+    public String getOggetto() {
+        String oggetto = doc.getElementsByTagName("oggetto").item(0).getTextContent();
+        return (oggetto);
+    }
+
+    public String getVitaAttuale() {
+        String VitaAttuale = doc.getElementsByTagName("vitaAttuale").item(0).getTextContent();
+        return (VitaAttuale);
+    }
+
+    public String getdanniOverTime() {
+        String Aggiunta = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
+        String dps = doc.getElementsByTagName("dps").item(0).getTextContent();
+        String tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
+        return (Aggiunta+";"+dps+";"+tipo);
     }
 }

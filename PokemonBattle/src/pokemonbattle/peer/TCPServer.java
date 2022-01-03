@@ -8,30 +8,59 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.net.ServerSocket;
 import java.net.Socket;
+import pokemonbattle.main.GameLogic;
 
 public class TCPServer extends Thread {
 
+    private ServerSocket server = null;
+    private boolean running = true;
+    PrintWriter out;
+    private GameLogic logic;
+    private TCPClient client;
+
+    public TCPServer(GameLogic logic) {
+        try {
+            server = new ServerSocket(42069);
+            this.logic = logic;
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(TCPServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void run() {
-        ServerSocket serverSocket;
-        try {
-            System.out.println("Server started");
-            serverSocket = new ServerSocket(4269);
-            Socket clientSocket = serverSocket.accept();
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String inputLine;
+        Socket connessione = null;
+        System.out.println("Server start");
+        while (running) {
+            try {
+                connessione = server.accept();
+                out = new PrintWriter(connessione.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(connessione.getInputStream()));
 
-            while ((inputLine = in.readLine()) != null) {
-                if (inputLine.equals("exit")) {
-                    break;
-                }
-                out.println(inputLine.toUpperCase());
+                System.out.println("Connessione con: " + connessione.getInetAddress() + ": " + connessione.getPort());
+                client = new TCPClient(connessione, logic);
+                client.start();
+                
+                /*while (true) {
+                    String inputLine = in.readLine();
+                    if (inputLine != null) {
+                        System.out.println("Messaggio ricevuto: " + inputLine);
+                        logic.add(inputLine);
+                    }
+
+                }*/
+                 
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(TCPServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-            in.close();
-            out.close();
-            clientSocket.close();
+        }
+    }
 
-        } catch (IOException ex) {}
+    public void invia(String toSend) {
+        out.println(toSend);
+    }
+
+    public TCPClient getClient() {
+        return this.client;
     }
 }

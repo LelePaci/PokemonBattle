@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package pokemonbattle.peer;
-
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**

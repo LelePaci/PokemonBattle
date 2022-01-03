@@ -47,10 +47,12 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-//        TCPServer s = new TCPServer();
-//        s.start();
-//        TCPClient c = new TCPClient();
-//        c.start();
+        GameLogic g= new GameLogic();
+        g.start();
+        //TCPServer s = new TCPServer(g);
+        //s.start();
+        TCPClient c = new TCPClient(g);
+        c.start();
     }
 
     public synchronized void start() {
