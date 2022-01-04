@@ -7,6 +7,8 @@ package pokemonbattle.framework;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pokemonbattle.main.*;
 import pokemonbattle.peer.*;
 
@@ -114,7 +116,7 @@ public class KeyInput extends KeyAdapter {
                     if (key != 110) {
                         ipAddress += key - 96;
                     } else {
-                        ipAddress +=".";
+                        ipAddress += ".";
                     }
                 }
 
@@ -124,7 +126,16 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 if (key == 10) {
-                    Connection.validateFromString(ipAddress);
+                    if (!Connection.validateFromString(ipAddress)) {
+                        Condivisa.errorAddress = true;
+                    } else {
+                        Condivisa.level++;
+                        handler.clearLevel();
+                        game.createLevel(Condivisa.level);
+                        Condivisa.server.stopReceive();
+                        Condivisa.client = new TCPClient();
+                        Condivisa.client.start();
+                    }
                 }
                 break;
         }

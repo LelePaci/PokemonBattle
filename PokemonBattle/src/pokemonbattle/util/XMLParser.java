@@ -31,72 +31,6 @@ public class XMLParser {
         }
     }
 
-    public static void AzioneXML(String XML) throws ParserConfigurationException, SAXException, IOException {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        InputSource is = new InputSource(new StringReader(XML));
-        Document doc;
-        doc = (Document) dBuilder.parse(is);
-        doc.getDocumentElement().normalize();
-        //POKEMON
-        String Comando = doc.getElementsByTagName("comando").item(0).getTextContent();
-        switch (Comando) {
-            case "m":
-                String Allenatore = doc.getElementsByTagName("nome").item(0).getTextContent();
-                break;
-            case "s":
-                String Nome = doc.getElementsByTagName("nome").item(0).getTextContent();
-                String Vita = doc.getElementsByTagName("vita").item(0).getTextContent();
-                int V = Integer.parseInt(Vita);
-                Pokemon PKM = new Pokemon(Nome, V);
-                //mancano le mosse e tipo
-                break;
-            case "a":
-                String NomeMossa = doc.getElementsByTagName("nomeMossa").item(0).getTextContent();
-                String TipoMossa = doc.getElementsByTagName("tipoMossa").item(0).getTextContent();
-                String Danni = doc.getElementsByTagName("danni").item(0).getTextContent();
-                String Tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
-                String Prob = doc.getElementsByTagName("prob").item(0).getTextContent();
-                break;
-            case "r":
-                String VR = doc.getElementsByTagName("vitaRimanente").item(0).getTextContent();
-                int VitaRimanente = Integer.parseInt(VR);
-                String MP = doc.getElementsByTagName("moltiplicatore").item(0).getTextContent();
-                int Moltiplicatore = Integer.parseInt(MP);
-                String Status = doc.getElementsByTagName("status").item(0).getTextContent();
-                String Note = doc.getElementsByTagName("note").item(0).getTextContent();
-                break;
-            case "i":
-                String Oggetto = doc.getElementsByTagName("oggetto").item(0).getTextContent();
-                String Pokemon = doc.getElementsByTagName("pokemon").item(0).getTextContent();
-                String VA = doc.getElementsByTagName("vitaAttuale").item(0).getTextContent();
-                int VitaAttuale = Integer.parseInt(VA);
-                break;
-            case "c":
-                String NomeCambio = doc.getElementsByTagName("nome").item(0).getTextContent();
-                String VitaCambio = doc.getElementsByTagName("vita").item(0).getTextContent();
-                int VCambio = Integer.parseInt(VitaCambio);
-                Pokemon PKMCambio = new Pokemon(NomeCambio, VCambio);
-                //mancano le mosse e tipo
-                break;
-            case "l":
-                String PokemonSconfitto = doc.getElementsByTagName("pokemon").item(0).getTextContent();
-                break;
-            case "e":
-                String PokemonSelezionato = doc.getElementsByTagName("pokemon").item(0).getTextContent();
-                String StatusPKM = doc.getElementsByTagName("status").item(0).getTextContent();
-                String AggiuntaPKM = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
-                String DpsPKM = doc.getElementsByTagName("dps").item(0).getTextContent();
-                String TipoPKM = doc.getElementsByTagName("tipo").item(0).getTextContent();
-                break;
-            case "f":
-                //FINE LOTTA
-                break;
-            default:
-                break;
-        }
-    }
-
     public Pokemon getPokemon(String toParse) {
         Pokemon pokemon = null;
         try {
@@ -250,12 +184,17 @@ public class XMLParser {
         return Integer.parseInt(Danni);
     }
 
-    public String getStatus() {
+    public String getTipoStatus() {
         String tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
-        String Danni = doc.getElementsByTagName("danni").item(0).getTextContent();
-        return (tipo + ";" + Danni);
+        return tipo;
     }
 
+    public int getProbStatus(){
+        String prob = doc.getElementsByTagName("prob").item(0).getTextContent();
+        return Integer.parseInt(prob);
+    }
+    
+    
     public String getVitaRimanente() {
         String vitaRimanente = doc.getElementsByTagName("vitaRimanente").item(0).getTextContent();
         return (vitaRimanente);
@@ -266,9 +205,9 @@ public class XMLParser {
         return (moltiplicatore);
     }
 
-    public String getStatusVita() {
+    public String getStatus() {
         String status = doc.getElementsByTagName("status").item(0).getTextContent();
-        return (status);
+        return status;
     }
 
     public String getNote() {
@@ -286,10 +225,18 @@ public class XMLParser {
         return (VitaAttuale);
     }
 
-    public String getdanniOverTime() {
+    public boolean getDOTAggiunta(){
         String Aggiunta = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
+        return Boolean.parseBoolean(Aggiunta);
+    }
+    
+    public int getDOTDps(){
         String dps = doc.getElementsByTagName("dps").item(0).getTextContent();
+        return Integer.parseInt(dps);
+    }
+    
+    public String getDOTTipo(){
         String tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
-        return (Aggiunta+";"+dps+";"+tipo);
+        return tipo;
     }
 }

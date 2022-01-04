@@ -1,14 +1,11 @@
 package pokemonbattle.peer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.net.ServerSocket;
 import java.net.Socket;
-import pokemonbattle.main.GameLogic;
+import pokemonbattle.framework.*;
+import pokemonbattle.main.*;
 
 public class TCPServer extends Thread {
 
@@ -17,39 +14,41 @@ public class TCPServer extends Thread {
     PrintWriter out;
     private GameLogic logic;
     private TCPClient client;
+    private boolean canConnect = true;
+    private Game game;
+    private Handler handler;
 
-    public TCPServer(GameLogic logic) {
+    public TCPServer(Game game, Handler handler) {
         try {
             server = new ServerSocket(42069);
-            this.logic = logic;
+            
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(TCPServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        this.logic = Condivisa.gameLogic;
+        this.game = game;
+        this.handler = handler;
     }
 
     @Override
     public void run() {
-        Socket connessione = null;
-        System.out.println("Server start");
+        System.out.println("Server started, port: " + server.getLocalPort());
         while (running) {
             try {
-                connessione = server.accept();
-                out = new PrintWriter(connessione.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(connessione.getInputStream()));
+                if (canConnect) {
+                    Socket connessione = server.accept();
+                    out = new PrintWriter(connessione.getOutputStream(), true);
 
-                System.out.println("Connessione con: " + connessione.getInetAddress() + ": " + connessione.getPort());
-                client = new TCPClient(connessione, logic);
-                client.start();
-                
-                /*while (true) {
-                    String inputLine = in.readLine();
-                    if (inputLine != null) {
-                        System.out.println("Messaggio ricevuto: " + inputLine);
-                        logic.add(inputLine);
-                    }
+                    System.out.println("Connessione con: " + connessione.getInetAddress() + ": " + connessione.getPort());
 
-                }*/
-                 
+                    Condivisa.level++;
+                    handler.clearLevel();
+                    game.createLevel(Condivisa.level);
+
+                    client = new TCPClient(connessione);
+                    client.start();
+                }
+
             } catch (IOException ex) {
                 java.util.logging.Logger.getLogger(TCPServer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
@@ -62,5 +61,14 @@ public class TCPServer extends Thread {
 
     public TCPClient getClient() {
         return this.client;
+    }
+
+    public void stopServer() {
+        running = false;
+        System.out.println("Server stopped");
+    }
+
+    public void stopReceive() {
+        canConnect = false;
     }
 }

@@ -10,7 +10,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import pokemonbattle.main.Condivisa;
 import static pokemonbattle.main.Game.stats;
@@ -20,9 +19,8 @@ import pokemonbattle.objects.*;
  *
  * @author pacie
  */
-public class Text{
+public class Text {
 
-    
     private float x, y;
     public String text;
     public Font font = null;
@@ -32,7 +30,7 @@ public class Text{
 
     public Text() {
     }
-    
+
     public Text(String text, float x, float y, Font font, Color color) {
         this.x = x;
         this.y = y;
@@ -91,9 +89,17 @@ public class Text{
                 break;
 
             case 2:
-                this.setData(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black),
-                        new Text("Inserisci indirizzo IP", 375, 75, pokeFont.getFont(30f), Color.black),
-                        new Text(input.ipAddress, 420, 125, pokeFont.getFont(30f), Color.red));
+                toAdd.add(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black));
+
+                toAdd.add(new Text(input.ipAddress, 420, 335, pokeFont.getFont(30f), Color.red));
+                if (Condivisa.errorAddress) {
+                    toAdd.add(new Text("Indirizzo IP NON VALIDO", 330, 285, pokeFont.getFont(40f), Color.red));
+                } else {
+                    toAdd.add(new Text("Inserisci indirizzo IP", 375, 265, pokeFont.getFont(30f), Color.black));
+                    toAdd.add(new Text("oppure attendi una richiesta", 330, 295, pokeFont.getFont(30f), Color.black));
+                }
+                this.setData(toAdd);
+                toAdd.clear();
                 break;
 
         }

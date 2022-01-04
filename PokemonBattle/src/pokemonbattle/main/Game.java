@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable {
 
     public static int HEIGHT;
     public static int WIDTH;
-    
+
     private Graphics g;
 
     //Object
@@ -37,22 +37,19 @@ public class Game extends Canvas implements Runnable {
     public static String stats = "";
     private final Text text = new Text();
     private final PokeFont pokeFont = Condivisa.pokeFont;
-    private XMLParser parser = new XMLParser();
+    private final XMLParser parser = new XMLParser();
+    private static Game game;
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
+        Condivisa.gameLogic = new GameLogic();
         HEIGHT = getHeight();
         WIDTH = getWidth();
     }
 
     public static void main(String[] args) {
-        Game game = new Game();
-        GameLogic g= new GameLogic();
-        g.start();
-        //TCPServer s = new TCPServer(g);
-        //s.start();
-        TCPClient c = new TCPClient(g);
-        c.start();
+        game = new Game();
+        // Condivisa.client = new TCPClient();
     }
 
     public synchronized void start() {
@@ -74,43 +71,12 @@ public class Game extends Canvas implements Runnable {
     }
 
     @Override
+    @SuppressWarnings("SleepWhileInLoop")
     public void run() {
         init();
         this.requestFocus();
         System.out.println("Game started");
-        long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
-        long timer = System.currentTimeMillis();
-        int updates = 0;
-        int frames = 0;
-        /*while (running) {
-            try {
-                Thread.sleep(33);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            while (delta >= 1) {
-                tick();
-                updates++;
-                delta--;
-            }
-            render();
-            frames++;
-
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                stats = "FPS: " + frames + " TICKS: " + updates;
-                //System.out.println(stats);
-                frames = 0;
-                updates = 0;
-            }
-        }*/
-        while (running) {            
+        while (running) {
             try {
                 Thread.sleep(33);
             } catch (InterruptedException ex) {
@@ -130,8 +96,20 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick() {
+        //Controllo errore di input dell'indirizzo IP
+        if (Condivisa.errorAddress) {
+            if (Condivisa.errorAddressCooldown > 0) {
+                Condivisa.errorAddressCooldown--;
+            }
+            if (Condivisa.errorAddressCooldown == 0) {
+                Condivisa.errorAddressCooldown = Condivisa.errorAddressCooldownDefault;
+                Condivisa.errorAddress = false;
+            }
+        }
+
         handler.tick();
         text.tick();
+        Condivisa.gameLogic.tick();
     }
 
     public void render() {
@@ -148,7 +126,7 @@ public class Game extends Canvas implements Runnable {
 
         strategy.show();
     }
-    
+
     public void createLevel(int level) {
         Texture texture = null;
 
@@ -169,7 +147,7 @@ public class Game extends Canvas implements Runnable {
                 int number = Condivisa.pokedexCount;
                 int row = 0;
                 int col = 0;
-                
+
                 System.out.println("Pokedex count: " + number);
                 for (int i = 0; i < number; i++) {
                     String fileName = MyFile.getListOfFiles(Condivisa.pokedexPath)[i];
@@ -197,20 +175,19 @@ public class Game extends Canvas implements Runnable {
                 break;
 
             case 2:
+                Condivisa.server = new TCPServer(game, handler);
+                Condivisa.server.start();
+
                 int max = MyFile.CountElement("res/background-images");
                 int rand = (int) (Math.random() * max) + 1;
                 handler.add(new Background("res/background-images/" + rand + ".png", 0, 0, WIDTH, HEIGHT));
 
                 texture = new Texture("res/intro-screens/insert-empty.png", 0, 0, 174, 46);
-                handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2, 20,
+                handler.add(new GenericObject((WIDTH - texture.getSize(3).width) / 2, 230,
                         texture.getSize(3).width,
                         texture.getSize(3).height, texture));
-
-                texture = new Texture("res/intro-screens/white-field.png", 0, 0, 62, 46);
-                int tempWidth = 400;
-                handler.add(new GenericObject((WIDTH - tempWidth) / 2, 170,
-                        tempWidth,
-                        texture.getSize(3).height, texture));
+                break;
+            case 3:
                 break;
         }
     }

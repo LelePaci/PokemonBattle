@@ -15,102 +15,81 @@ import pokemonbattle.util.XMLParser;
  *
  * @author matti
  */
-public class GameLogic extends Thread {
+public class GameLogic {
 
-    private static List<String> list;
+    private static List<String> listPeerEvent;
     private XMLParser parser = new XMLParser();
-
+    
     public GameLogic() {
-        list = new ArrayList();
+        listPeerEvent = new ArrayList();
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                if (!list.isEmpty()) {
-                    parser.parseString(list.get(0));
-                    list.remove(0);
-                    String comando = parser.getComando();
-                    switch (comando) {
-                        case "m":
-                            System.out.println(parser.getNomeAllenatore());
-                            break;
-                        case "s":
-                            System.out.println("Nome: " + parser.getNomePokemon());
-                            System.out.println("Vita: " + parser.getVitaPokemon());
-                            System.out.println("Tipo: " + parser.getTipoPokemon());
-                            break;
+    public void tick() {
+            if (!listPeerEvent.isEmpty()) {
+                parser.parseString(listPeerEvent.get(0));
+                listPeerEvent.remove(0);
+                String comando = parser.getComando();
+                switch (comando) {
+                    case "m":
+                        System.out.println(parser.getNomeAllenatore());
+                        break;
+                    case "s":
+                        System.out.println("Nome: " + parser.getNomePokemon());
+                        System.out.println("Vita: " + parser.getVitaPokemon());
+                        System.out.println("Tipo: " + parser.getTipoPokemon());
+                        break;
 
-                        case "a":
-                            System.out.println("Nome mossa: " + parser.getNomeMossa());
-                            System.out.println("Tipo mossa: " + parser.getTipoMossa());
-                            System.out.println("Danni mossa: " + parser.getDanniMossa());
-                            String Tipo_Danni = parser.getStatus();
-                            String Tipo = Tipo_Danni.substring(0, Tipo_Danni.indexOf(";"));
-                            String Dn = Tipo_Danni.substring(Tipo_Danni.indexOf(";") + 1);
-                            int Danni = Integer.parseInt(Dn);
-                            System.out.println("Tipo Status: " + Tipo);
-                            System.out.println("Danni Status: " + Danni);
-                            break;
-                        case "r":
-                            System.out.println("Vita rimanente: " + parser.getVitaRimanente());
-                            System.out.println("Moltiplicatore: " + parser.getMoltiplicatore());
-                            System.out.println("Status vita: " + parser.getStatusVita());
-                            System.out.println("Note: " + parser.getNote());
-                            break;
-                        case "i":
-                            System.out.println("Oggetto: " + parser.getOggetto());
-                            System.out.println("Nome Pokemon: " + parser.getNomePokemon());
-                            System.out.println("Vita attuale: " + parser.getVitaAttuale());
-                            break;
-                        case "f":
-                            System.out.println("L'avversario si è arreso");
-                            break;
-                        case "c":
-                            System.out.println("Nome: " + parser.getNomePokemon());
-                            System.out.println("Vita: " + parser.getVitaPokemon());
-                            System.out.println("Tipo: " + parser.getTipoPokemon());
-                            break;
+                    case "a":
+                        System.out.println("Nome mossa: " + parser.getNomeMossa());
+                        System.out.println("Tipo mossa: " + parser.getTipoMossa());
+                        System.out.println("Danni mossa: " + parser.getDanniMossa());
+                        System.out.println("Tipo Status: " + parser.getTipoStatus());
+                        System.out.println("Probabilità Status: " + parser.getProbStatus());
+                        break;
+                    case "r":
+                        System.out.println("Vita rimanente: " + parser.getVitaRimanente());
+                        System.out.println("Moltiplicatore: " + parser.getMoltiplicatore());
+                        System.out.println("Status vita: " + parser.getStatus());
+                        System.out.println("Note: " + parser.getNote());
+                        break;
+                    case "i":
+                        System.out.println("Oggetto: " + parser.getOggetto());
+                        System.out.println("Nome Pokemon: " + parser.getNomePokemon());
+                        System.out.println("Vita attuale: " + parser.getVitaAttuale());
+                        break;
+                    case "f":
+                        System.out.println("L'avversario si è arreso");
+                        break;
+                    case "c":
+                        System.out.println("Nome: " + parser.getNomePokemon());
+                        System.out.println("Vita: " + parser.getVitaPokemon());
+                        System.out.println("Tipo: " + parser.getTipoPokemon());
+                        break;
 
-                        case "l":
-                            System.out.println("Nome Pokemon: " + parser.getNomePokemon());
-                            break;
-                        case "e":
-                            System.out.println("Nome Pokemon: " + parser.getNomePokemon());
-                            System.out.println("Status vita: " + parser.getStatusVita());
-                            String DanniOverTime = parser.getdanniOverTime();
-                            String SplitDanni[]=DanniOverTime.split(";");
-                            String Aggiunta = SplitDanni[0];
-                            String dps = SplitDanni[1];
-                            String TipoDanni = SplitDanni[2];
-                            int Dps= Integer.parseInt(dps);
-                            boolean Agg=Boolean.parseBoolean(Aggiunta);
-                            System.out.println("Aggiunta: " + Agg);
-                            System.out.println("Dps: " + Dps);
-                            System.out.println("Tipo: " + TipoDanni);
-                            break;
+                    case "l":
+                        System.out.println("Nome Pokemon: " + parser.getNomePokemon());
+                        break;
+                    case "e":
+                        System.out.println("Nome Pokemon: " + parser.getNomePokemon());
+                        System.out.println("Status: " + parser.getStatus());
 
-                    }
+                        System.out.println("Aggiunta: " + parser.getDOTAggiunta());
+                        System.out.println("Dps: " + parser.getDOTDps());
+                        System.out.println("Tipo: " + parser.getDOTTipo());
+                        break;
                 }
-
-                Thread.sleep(33);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GameLogic.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
     }
 
-    public void add(String toAdd) {
-        list.add(toAdd);
+    public void addPeerEvent(String toAdd) {
+        listPeerEvent.add(toAdd);
 
     }
 
-    public void printList() {
-        if (!list.isEmpty()) {
-            for (int i = 0; i < list.size(); i++) {
-
-                System.out.println("list " + i + ": " + list.get(i));
+    public void printListPeerEvent() {
+        if (!listPeerEvent.isEmpty()) {
+            for (int i = 0; i < listPeerEvent.size(); i++) {
+                System.out.println("list " + i + ": " + listPeerEvent.get(i));
             }
         }
     }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package pokemonbattle.peer;
+
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**
@@ -12,12 +13,14 @@ import org.apache.commons.validator.routines.InetAddressValidator;
  */
 public class Connection {
 
-    public static void validateFromString(String address) {
+    public static boolean validateFromString(String address) {
         InetAddressValidator validator = new InetAddressValidator();
         if (validator.isValidInet4Address(address)) {
             System.out.println("L'indirizzo IP: " + address + " è valido");
-        }else{
+            return true;
+        } else {
             System.out.println("L'indirizzo IP: " + address + " non è valido");
+            return false;
         }
     }
 }
