@@ -1,26 +1,25 @@
 package pokemonbattle.util;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import pokemonbattle.objects.Mossa;
-import pokemonbattle.objects.Pokemon;
+import java.io.*;
+import java.util.logging.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+import pokemonbattle.objects.*;
 
 public class XMLParser {
 
     private Document doc;
     private DocumentBuilder dBuilder;
     private String xml = "";
+    static XMLParser test = new XMLParser();
+
+    public static void main(String[] args) throws TransformerException {
+        test.getXMLStatus("Pikachu", "Confuso", true, 10, "Fuoco", 20);
+    }
 
     public XMLParser() {
         try {
@@ -189,12 +188,11 @@ public class XMLParser {
         return tipo;
     }
 
-    public int getProbStatus(){
+    public int getProbStatus() {
         String prob = doc.getElementsByTagName("prob").item(0).getTextContent();
         return Integer.parseInt(prob);
     }
-    
-    
+
     public String getVitaRimanente() {
         String vitaRimanente = doc.getElementsByTagName("vitaRimanente").item(0).getTextContent();
         return (vitaRimanente);
@@ -225,18 +223,303 @@ public class XMLParser {
         return (VitaAttuale);
     }
 
-    public boolean getDOTAggiunta(){
+    public boolean getDOTAggiunta() {
         String Aggiunta = doc.getElementsByTagName("aggiunta").item(0).getTextContent();
         return Boolean.parseBoolean(Aggiunta);
     }
-    
-    public int getDOTDps(){
+
+    public int getDOTDps() {
         String dps = doc.getElementsByTagName("dps").item(0).getTextContent();
         return Integer.parseInt(dps);
     }
-    
-    public String getDOTTipo(){
+
+    public String getDOTTipo() {
         String tipo = doc.getElementsByTagName("tipo").item(0).getTextContent();
         return tipo;
     }
+
+    public String getXMLAllenatore(String name) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("m"));
+            rootElement.appendChild(comando);
+
+            Element nome = doc.createElement("nome");
+            nome.appendChild(doc.createTextNode(name));
+            rootElement.appendChild(nome);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLAttacco(String nomeMossa, String tipoMossa, int danni, String Tipo, int Prob) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("a"));
+            rootElement.appendChild(comando);
+
+            Element nomeM = doc.createElement("nomeMossa");
+            nomeM.appendChild(doc.createTextNode(nomeMossa));
+            rootElement.appendChild(nomeM);
+
+            Element tipoM = doc.createElement("tipoMossa");
+            tipoM.appendChild(doc.createTextNode(tipoMossa));
+            rootElement.appendChild(tipoM);
+
+            Element dn = doc.createElement("danni");
+            String DN = String.valueOf(danni);
+            dn.appendChild(doc.createTextNode(DN));
+            rootElement.appendChild(dn);
+
+            Element Status = doc.createElement("status");
+            rootElement.appendChild(Status);
+            Element tipo = doc.createElement("tipo");
+            tipo.appendChild(doc.createTextNode(Tipo));
+            Status.appendChild(tipo);
+            Element prob = doc.createElement("prob");
+            String PB = String.valueOf(Prob);
+            prob.appendChild(doc.createTextNode(PB));
+            Status.appendChild(prob);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLRispostaAttacco(int VitaRimanente, int Moltiplicatore, String Status, String Note) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("r"));
+            rootElement.appendChild(comando);
+
+            String vitar = String.valueOf(VitaRimanente);
+            Element vitaR = doc.createElement("vitaRimanente");
+            vitaR.appendChild(doc.createTextNode(vitar));
+            rootElement.appendChild(vitaR);
+
+            Element molti = doc.createElement("moltiplicatore");
+            String Molti = String.valueOf(Moltiplicatore);
+            molti.appendChild(doc.createTextNode(Molti));
+            rootElement.appendChild(molti);
+
+            Element Statu = doc.createElement("status");
+            Statu.appendChild(doc.createTextNode(Status));
+            rootElement.appendChild(Statu);
+
+            Element Not = doc.createElement("note");
+            Not.appendChild(doc.createTextNode(Note));
+            rootElement.appendChild(Not);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLInventario(String Oggetto, String Pokemon, int VitaAttuale) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("i"));
+            rootElement.appendChild(comando);
+
+            Element oggetto = doc.createElement("oggetto");
+            oggetto.appendChild(doc.createTextNode(Oggetto));
+            rootElement.appendChild(oggetto);
+
+            Element pokemon = doc.createElement("pokemon");
+            pokemon.appendChild(doc.createTextNode(Pokemon));
+            rootElement.appendChild(pokemon);
+
+            Element vitattuale = doc.createElement("vitaAttuale");
+            String VA = String.valueOf(VitaAttuale);
+            vitattuale.appendChild(doc.createTextNode(VA));
+            rootElement.appendChild(vitattuale);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            System.out.println(writer.toString());
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLCambioPokemon(String Nome, int Vita, String Tipo) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("c"));
+            rootElement.appendChild(comando);
+
+            Element Pokemon = doc.createElement("pokemon");
+            rootElement.appendChild(Pokemon);
+
+            Element nome = doc.createElement("nome");
+            nome.appendChild(doc.createTextNode(Nome));
+            Pokemon.appendChild(nome);
+            //rootElement.appendChild(nome);
+
+            Element vita = doc.createElement("vitaRimanente");
+            String VT = String.valueOf(Vita);
+            vita.appendChild(doc.createTextNode(VT));
+            Pokemon.appendChild(vita);
+            //rootElement.appendChild(vita);
+
+            Element tipo = doc.createElement("tipo");
+            tipo.appendChild(doc.createTextNode(Tipo));
+            Pokemon.appendChild(tipo);
+            //rootElement.appendChild(tipo);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            System.out.println(writer.toString());
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLResa() throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("f"));
+            rootElement.appendChild(comando);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            System.out.println(writer.toString());
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLPokemonSconfitto(String Pokemon) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("l"));
+            rootElement.appendChild(comando);
+
+            Element pokemon = doc.createElement("pokemon");
+            pokemon.appendChild(doc.createTextNode(Pokemon));
+            rootElement.appendChild(pokemon);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
+    public String getXMLStatus(String Pokemon, String Status, boolean aggiunta, int Dps, String Tipo, int Vita) throws TransformerConfigurationException, TransformerException {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("e"));
+            rootElement.appendChild(comando);
+
+            Element pokemon = doc.createElement("pokemon");
+            pokemon.appendChild(doc.createTextNode(Pokemon));
+            rootElement.appendChild(pokemon);
+
+            Element status = doc.createElement("status");
+            status.appendChild(doc.createTextNode(Status));
+            rootElement.appendChild(status);
+
+            Element DanniOverTime = doc.createElement("danniOverTime");
+            rootElement.appendChild(DanniOverTime);
+
+            Element Aggiunta = doc.createElement("aggiunta");
+            String Baggiunta = String.valueOf(aggiunta);
+            Aggiunta.appendChild(doc.createTextNode(Baggiunta));
+            DanniOverTime.appendChild(Aggiunta);
+
+            Element dps = doc.createElement("dps");
+            String DPS = String.valueOf(Dps);
+            dps.appendChild(doc.createTextNode(DPS));
+            DanniOverTime.appendChild(dps);
+
+            Element tipo = doc.createElement("tipo");
+            tipo.appendChild(doc.createTextNode(Tipo));
+            DanniOverTime.appendChild(tipo);
+
+            Element vita = doc.createElement("vita");
+            String VT = String.valueOf(Vita);
+            vita.appendChild(doc.createTextNode(VT));
+            rootElement.appendChild(vita);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            System.out.println(writer.toString());
+            return writer.toString();
+        } catch (TransformerException pce) {
+        }
+        return null;
+    }
+
 }

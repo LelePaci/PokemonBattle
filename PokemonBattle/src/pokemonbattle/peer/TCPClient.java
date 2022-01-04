@@ -19,8 +19,8 @@ public class TCPClient extends Thread {
     private boolean running = false;
     private GameLogic logic;
 
-    public TCPClient() {
-        address = new InetSocketAddress("87.8.112.50", 42069);
+    public TCPClient(String ipAddress) {
+        address = new InetSocketAddress(ipAddress, 42069);
         try {
             client = new Socket();
             client.connect(address, 1000);

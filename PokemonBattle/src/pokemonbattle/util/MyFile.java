@@ -13,7 +13,6 @@ public class MyFile {
         String line = null;
         StringBuilder stringBuilder = new StringBuilder();
         String ls = System.getProperty("line.separator");
-
         try {
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);

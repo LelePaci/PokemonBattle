@@ -133,7 +133,7 @@ public class KeyInput extends KeyAdapter {
                         handler.clearLevel();
                         game.createLevel(Condivisa.level);
                         Condivisa.server.stopReceive();
-                        Condivisa.client = new TCPClient();
+                        Condivisa.client = new TCPClient(ipAddress);
                         Condivisa.client.start();
                     }
                 }
