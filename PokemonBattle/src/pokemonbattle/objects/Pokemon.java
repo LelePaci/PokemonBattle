@@ -30,10 +30,11 @@ public class Pokemon extends GameObject {
         this.mosse  = mosse;
     }
 
-    public Pokemon(String Nome, int Vita) {
+    public Pokemon(String Nome, int Vita,String[] tipi) {
         super(0, 0);
         name = Nome;
         life = Vita;
+        type=tipi;
     }
     
     public String getName() {

@@ -16,9 +16,10 @@ public class XMLParser {
     private DocumentBuilder dBuilder;
     private String xml = "";
     static XMLParser test = new XMLParser();
+    static String[] Tipi = {"tipo1", "tipo2", "tipo3"};
 
     public static void main(String[] args) throws TransformerException {
-        test.getXMLStatus("Pikachu", "Confuso", true, 10, "Fuoco", 20);
+
     }
 
     public XMLParser() {
@@ -41,7 +42,7 @@ public class XMLParser {
             String vita = doc.getElementsByTagName("vita").item(0).getTextContent();
             String immagineFront = doc.getElementsByTagName("immagineFront").item(0).getTextContent();
             String immagineBack = doc.getElementsByTagName("immagineBack").item(0).getTextContent();
-            //TIPI
+            //TIPI 
             int ContaTipi = 0;
             NodeList listTipi = doc.getElementsByTagName("tipi");
             for (int i = 0; i < listTipi.getLength(); i++) {
@@ -64,6 +65,9 @@ public class XMLParser {
                         IndiceTipo++;
                     }
                 }
+            }
+            for (int i = 0; i < ContaTipi; i++) {
+                System.out.println(tipi[i]);
             }
             //DEBOLEZZE
             int ContaDebolezze = 0;
@@ -238,7 +242,7 @@ public class XMLParser {
         return tipo;
     }
 
-    public String getXMLAllenatore(String name) throws TransformerConfigurationException, TransformerException {
+    public String getXMLAllenatore(String name) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -258,12 +262,13 @@ public class XMLParser {
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLAttacco(String nomeMossa, String tipoMossa, int danni, String Tipo, int Prob) throws TransformerConfigurationException, TransformerException {
+    public String getXMLAttacco(String nomeMossa, String tipoMossa, int danni, String Tipo, int Prob) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -301,13 +306,15 @@ public class XMLParser {
             StringWriter writer = new StringWriter();
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
-            return writer.toString();
-        } catch (TransformerException pce) {
+            //return writer.toString();
+            System.out.println(writer.toString());
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLRispostaAttacco(int VitaRimanente, int Moltiplicatore, String Status, String Note) throws TransformerConfigurationException, TransformerException {
+    public String getXMLRispostaAttacco(int VitaRimanente, int Moltiplicatore, String Status, String Note) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -341,12 +348,13 @@ public class XMLParser {
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLInventario(String Oggetto, String Pokemon, int VitaAttuale) throws TransformerConfigurationException, TransformerException {
+    public String getXMLInventario(String Oggetto, String Pokemon, int VitaAttuale) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -376,18 +384,19 @@ public class XMLParser {
             transformer.transform(domSource, result);
             System.out.println(writer.toString());
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLCambioPokemon(String Nome, int Vita, String Tipo) throws TransformerConfigurationException, TransformerException {
+    public String getXMLInvioPokemon(String cmd, String Nome, int Vita, String[] Tipo) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
             doc.appendChild(rootElement);
             Element comando = doc.createElement("comando");
-            comando.appendChild(doc.createTextNode("c"));
+            comando.appendChild(doc.createTextNode(cmd));
             rootElement.appendChild(comando);
 
             Element Pokemon = doc.createElement("pokemon");
@@ -396,18 +405,18 @@ public class XMLParser {
             Element nome = doc.createElement("nome");
             nome.appendChild(doc.createTextNode(Nome));
             Pokemon.appendChild(nome);
-            //rootElement.appendChild(nome);
 
-            Element vita = doc.createElement("vitaRimanente");
+            Element vita = doc.createElement("vita");
             String VT = String.valueOf(Vita);
             vita.appendChild(doc.createTextNode(VT));
             Pokemon.appendChild(vita);
-            //rootElement.appendChild(vita);
 
-            Element tipo = doc.createElement("tipo");
-            tipo.appendChild(doc.createTextNode(Tipo));
-            Pokemon.appendChild(tipo);
-            //rootElement.appendChild(tipo);
+            for (int i = 0; i < Tipo.length; i++) {
+                Element tipo = doc.createElement("tipo");
+                tipo.appendChild(doc.createTextNode(Tipo[i]));
+                Pokemon.appendChild(tipo);
+
+            }
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -417,12 +426,13 @@ public class XMLParser {
             transformer.transform(domSource, result);
             System.out.println(writer.toString());
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLResa() throws TransformerConfigurationException, TransformerException {
+    public String getXMLResa() {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -439,12 +449,13 @@ public class XMLParser {
             transformer.transform(domSource, result);
             System.out.println(writer.toString());
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLPokemonSconfitto(String Pokemon) throws TransformerConfigurationException, TransformerException {
+    public String getXMLPokemonSconfitto(String Pokemon) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -464,12 +475,13 @@ public class XMLParser {
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public String getXMLStatus(String Pokemon, String Status, boolean aggiunta, int Dps, String Tipo, int Vita) throws TransformerConfigurationException, TransformerException {
+    public String getXMLStatus(String Pokemon, String Status, boolean aggiunta, int Dps, String Tipo, int Vita) {
         try {
             Document doc = dBuilder.newDocument();
             Element rootElement = doc.createElement("root");
@@ -517,7 +529,8 @@ public class XMLParser {
             transformer.transform(domSource, result);
             System.out.println(writer.toString());
             return writer.toString();
-        } catch (TransformerException pce) {
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

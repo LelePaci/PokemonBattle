@@ -26,7 +26,7 @@ public class Condivisa {
 
     public static boolean canChangeName = true;
     public static KeyInput input;
-    public static String name;
+    public static String myName;
     public static final String pokedexPath = "res/pokedex/xml";
     public static final int pokedexCount = MyFile.CountElement(pokedexPath);
     public static int chosenPokemon = 0; //variabile per controllo dei pokemon scelti dal giocatore
@@ -40,5 +40,8 @@ public class Condivisa {
     public static boolean errorAddress = false; //In caso di errore di inserimento dell'indirizzo ip, viene settato a true e viene visualizzato un messaggio di errore
     public static int errorAddressCooldownDefault = 40;
     public static int errorAddressCooldown = errorAddressCooldownDefault; //Non utilizzo una Thread.sleep() perchè blocca il metodo tick() e impedisce l'inserimento di altri dati immediatamente
-    
+    public static String enemyName;
+    public static Pokemon enemyPokemon;
+    public static Game game;
+    public static Handler handler;
 }

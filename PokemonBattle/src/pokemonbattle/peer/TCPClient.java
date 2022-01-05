@@ -18,6 +18,7 @@ public class TCPClient extends Thread {
     private InputStreamReader input;
     private boolean running = false;
     private GameLogic logic;
+    private boolean firstPeer;
 
     public TCPClient(String ipAddress) {
         address = new InetSocketAddress(ipAddress, 42069);
@@ -66,5 +67,17 @@ public class TCPClient extends Thread {
 
     public void invia(String n) {
         out.println(n);
+    }
+
+    public boolean isConnected() {
+        return client.isConnected();
+    }
+
+    public boolean isBound() {
+        return client.isBound();
+    }
+
+    public boolean isFirstPeer() {
+        return firstPeer;
     }
 }
