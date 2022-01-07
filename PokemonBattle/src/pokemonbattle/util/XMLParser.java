@@ -66,9 +66,6 @@ public class XMLParser {
                     }
                 }
             }
-            for (int i = 0; i < ContaTipi; i++) {
-                System.out.println(tipi[i]);
-            }
             //DEBOLEZZE
             int ContaDebolezze = 0;
             NodeList listDebolezze = doc.getElementsByTagName("debolezze");
@@ -306,8 +303,8 @@ public class XMLParser {
             StringWriter writer = new StringWriter();
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
-            //return writer.toString();
-            System.out.println(writer.toString());
+            return writer.toString();
+            //System.out.println(writer.toString());
         } catch (TransformerException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -424,7 +421,7 @@ public class XMLParser {
             StringWriter writer = new StringWriter();
             StreamResult result = new StreamResult(writer);
             transformer.transform(domSource, result);
-            System.out.println(writer.toString());
+            //System.out.println(writer.toString());
             return writer.toString();
         } catch (TransformerException ex) {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);

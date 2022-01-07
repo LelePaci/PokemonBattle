@@ -15,7 +15,6 @@ public class TCPClient extends Thread {
     private Socket client = null;
     private InetSocketAddress address = null;
     private PrintWriter out = null;
-    private InputStreamReader input;
     private boolean running = false;
     private GameLogic logic;
     private boolean firstPeer;
@@ -25,9 +24,14 @@ public class TCPClient extends Thread {
         try {
             client = new Socket();
             client.connect(address, 1000);
-            out = new PrintWriter(client.getOutputStream(), true);
+            try {
+                out = new PrintWriter(client.getOutputStream(), true);
+            } catch (IOException ex) {
+                Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
             running = true;
             this.logic = Condivisa.gameLogic;
+            this.firstPeer = true;
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,6 +40,14 @@ public class TCPClient extends Thread {
     public TCPClient(Socket client) {
         this.client = client;
         this.logic = Condivisa.gameLogic;
+        try {
+            out = new PrintWriter(client.getOutputStream(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.firstPeer = false;
+        running = true;
+
     }
 
     @Override
@@ -65,8 +77,9 @@ public class TCPClient extends Thread {
         running = false;
     }
 
-    public void invia(String n) {
-        out.println(n);
+    public void invia(String xml) {
+        System.out.println("Inviato messaggio: " + xml);
+        out.println(xml);
     }
 
     public boolean isConnected() {

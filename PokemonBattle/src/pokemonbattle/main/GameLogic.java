@@ -44,6 +44,9 @@ public class GameLogic {
                             xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
                             Condivisa.client.invia(xml);
                             inviaNick = false;
+                            Condivisa.battle_starting = true;
+                            Condivisa.battle_sendMyPokemon = true;
+                            Condivisa.myCurrentPokemon = Condivisa.selectedPokemon.get(0);
                         }
                     }
                 }
@@ -107,6 +110,11 @@ public class GameLogic {
                     int vita = parser.getVitaPokemon();
                     String[] tipi = {parser.getTipoPokemon()};
                     Condivisa.enemyPokemon = new Pokemon(nome, vita, tipi);
+
+                    Pokemon send = Condivisa.selectedPokemon.get(0);
+                    String xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
+                    Condivisa.client.invia(xml);
+                    //in seguito inviare l'attacco dopo input
                     break;
 
                 case "a":

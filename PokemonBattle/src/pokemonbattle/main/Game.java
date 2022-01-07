@@ -49,6 +49,7 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         game = new Game();
+        Condivisa.game = game;
         // Condivisa.client = new TCPClient();
     }
 
@@ -89,6 +90,7 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         handler = new Handler();
+        Condivisa.handler = handler;
         input = new KeyInput(this, handler, text);
         Condivisa.input = input;
         this.addKeyListener(input);
@@ -98,13 +100,19 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         //Controllo errore di input dell'indirizzo IP
         if (Condivisa.errorAddress) {
-            if (Condivisa.errorAddressCooldown > 0) {
-                Condivisa.errorAddressCooldown--;
-            }
-            if (Condivisa.errorAddressCooldown == 0) {
-                Condivisa.errorAddressCooldown = Condivisa.errorAddressCooldownDefault;
-                Condivisa.errorAddress = false;
-            }
+            eventCD(Condivisa.errorAddress, Condivisa.errorAddressCooldown);
+        }
+        //Visualizzazione messaggio ad inizio partita
+        if (Condivisa.battle_starting) {
+            eventCD(Condivisa.battle_starting, Condivisa.battle_startingCooldown);
+        }
+        //Visualizzazione messaggio invio pokemon in campo avversario
+        if (Condivisa.battle_sendEnemyPokemon) {
+            eventCD(Condivisa.battle_sendEnemyPokemon, Condivisa.battle_sendEnemyPokemonCooldown);
+        }
+        //Visualizzazione messaggio mio invio pokemon 
+        if (Condivisa.battle_sendMyPokemon) {
+            eventCD(Condivisa.battle_sendMyPokemon, Condivisa.battle_sendMyPokemonCooldown);
         }
 
         handler.tick();
@@ -188,7 +196,29 @@ public class Game extends Canvas implements Runnable {
                         texture.getSize(3).height, texture));
                 break;
             case 3:
+                if (Condivisa.battleBackgroundPath.isEmpty()) {
+                    max = MyFile.CountElement("res/battle-background");
+                    rand = (int) (Math.random() * max) + 1;
+                    Condivisa.battleBackgroundPath = "res/battle-background/background-" + rand + ".png";
+                }
+                handler.add(new Background(Condivisa.battleBackgroundPath, 0, 0, WIDTH, HEIGHT));
+
+                texture = new Texture("res/ingame-menu/bottom-bar.png", 0, 0, 240, 48);
+                handler.add(new GenericObject(0, HEIGHT - texture.getSize(4).height,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture));
+
                 break;
+        }
+    }
+
+    public void eventCD(boolean event, int eventCD) {
+        if (eventCD > 0) {
+            eventCD--;
+        }
+        if (eventCD == 0) {
+            eventCD = Condivisa.errorAddressCooldownDefault;
+            event = false;
         }
     }
 }

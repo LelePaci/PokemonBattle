@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import pokemonbattle.main.Condivisa;
+import pokemonbattle.main.Game;
 import static pokemonbattle.main.Game.stats;
 import pokemonbattle.objects.*;
 
@@ -90,7 +91,6 @@ public class Text {
 
             case 2:
                 toAdd.add(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black));
-
                 toAdd.add(new Text(input.ipAddress, 420, 335, pokeFont.getFont(30f), Color.red));
                 if (Condivisa.errorAddress) {
                     toAdd.add(new Text("Indirizzo IP NON VALIDO", 330, 285, pokeFont.getFont(40f), Color.red));
@@ -101,9 +101,31 @@ public class Text {
                 this.setData(toAdd);
                 toAdd.clear();
                 break;
+            case 3:
+                int firstLine = Game.HEIGHT - 113;
+                int secondLine = Game.HEIGHT - 65;
+                int leftSpacing = 50;
+                toAdd.add(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black));
+                if (Condivisa.battle_starting) {
+                    toAdd.add(new Text("Inizia la battaglia con ", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                    toAdd.add(new Text(Condivisa.enemyName, leftSpacing, secondLine, pokeFont.getFont(40f), Color.red));
+                }
 
+                if (Condivisa.battle_sendEnemyPokemon) {
+                    toAdd.add(new Text("E' il turno di " + "" + "mandato in", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                    toAdd.add(new Text("campo da " + Condivisa.enemyName, leftSpacing, secondLine, pokeFont.getFont(40f), Color.white));
+                }
+                
+                if (Condivisa.battle_sendMyPokemon) {
+                    toAdd.add(new Text("Vai, " + Condivisa.myCurrentPokemon.getName(), leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                    
+                }
+                
+
+                this.setData(toAdd);
+                toAdd.clear();
+                break;
         }
-
     }
 
     public void render(Graphics g) {

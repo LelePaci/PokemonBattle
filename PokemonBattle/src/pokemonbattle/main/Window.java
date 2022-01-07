@@ -28,25 +28,6 @@ public class Window {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                game.stop();
-                System.exit(0);
-                if (Condivisa.server != null) {
-                    if (Condivisa.server.getClient() != null) {
-                        Condivisa.server.getClient().stopClient();
-                    }
-                    Condivisa.server.stopServer();
-                    
-                }
-                if (Condivisa.client != null) {
-                    Condivisa.client.stopClient();
-                }
-            }
-        });
-
         game.start();
     }
 
