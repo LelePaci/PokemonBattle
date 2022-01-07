@@ -32,12 +32,12 @@ public class Condivisa {
     public static GameLogic gameLogic;
     public static TCPServer server;
     public static TCPClient client;
-
+    
     //myGame
     public static String myName = "guest";
     public static List<Pokemon> selectedPokemon = new ArrayList(); //lista dei pokemon scelti dal giocatore
     public static Pokemon myCurrentPokemon;
-
+    public static int pokemonRimanenti = selectedPokemon.size();
     //enemyGame
     public static String enemyName = "guest";
     public static Pokemon enemyPokemon;

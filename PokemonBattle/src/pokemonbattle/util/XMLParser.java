@@ -531,5 +531,27 @@ public class XMLParser {
         }
         return null;
     }
+    public String getXMLPassoTurno() {
+        try {
+            Document doc = dBuilder.newDocument();
+            Element rootElement = doc.createElement("root");
+            doc.appendChild(rootElement);
+            Element comando = doc.createElement("comando");
+            comando.appendChild(doc.createTextNode("p"));
+            rootElement.appendChild(comando);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(domSource, result);
+            System.out.println(writer.toString());
+            return writer.toString();
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
 }

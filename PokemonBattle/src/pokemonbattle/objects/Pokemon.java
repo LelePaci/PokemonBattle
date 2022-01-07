@@ -20,6 +20,10 @@ public class Pokemon extends GameObject {
     private String[] type;
     private Mossa[] mosse = new Mossa[4];
     private String[] debolezze;
+    private String status = "";
+    private boolean danniOverTime_aggiunta;
+    private int danniOverTime_dps;
+    private String danniOverTime_tipo;
 
     public Pokemon(String Nome, int Vita, String imageFront, String imageBack, String[] type, String[] debolezze, Mossa[] mosse) {
         super(0, 0);
@@ -27,16 +31,16 @@ public class Pokemon extends GameObject {
         this.life = Vita;
         this.type = type;
         this.debolezze = debolezze;
-        this.mosse  = mosse;
+        this.mosse = mosse;
     }
 
-    public Pokemon(String Nome, int Vita,String[] tipi) {
+    public Pokemon(String Nome, int Vita, String[] tipi) {
         super(0, 0);
         name = Nome;
         life = Vita;
-        type=tipi;
+        type = tipi;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -77,6 +81,44 @@ public class Pokemon extends GameObject {
         this.debolezze = debolezze;
     }
 
+    public Mossa getMossa(int pos) {
+        return mosse[pos];
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean getDanniOverTime_aggiunta() {
+        return danniOverTime_aggiunta;
+    }
+
+    public void setDanniOverTime_aggiunta(boolean danniOverTime_aggiunta) {
+        this.danniOverTime_aggiunta = danniOverTime_aggiunta;
+    }
+
+    public int getDanniOverTime_dps() {
+        return danniOverTime_dps;
+    }
+
+    public void setDanniOverTime_dps(int danniOverTime_dps) {
+        this.danniOverTime_dps = danniOverTime_dps;
+    }
+
+    public String getDanniOverTime_tipo() {
+        return danniOverTime_tipo;
+    }
+
+    public void setDanniOverTime_tipo(String danniOverTime_tipo) {
+        this.danniOverTime_tipo = danniOverTime_tipo;
+    }
+    
+    
+    
     @Override
     public void tick(LinkedList<GameObject> object) {
 

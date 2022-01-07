@@ -18,10 +18,10 @@ import pokemonbattle.util.*;
 public class GameLogic {
 
     private static List<String> listPeerEvent;
-    private XMLParser parser = new XMLParser();
+    private final XMLParser parser = new XMLParser();
     private boolean inviaNick = true;
-    private boolean inviaPrimoPokemon = true;
     private boolean turno;
+    private boolean inviaPrimoPokemon = false;
 
     public GameLogic() {
         listPeerEvent = new ArrayList();
@@ -40,12 +40,16 @@ public class GameLogic {
                         if (leggiEvento(cmd)) { //caso di leggi evento è "m"
                             String xml = parser.getXMLAllenatore(Condivisa.myName);
                             Condivisa.client.invia(xml);
-                            Pokemon send = Condivisa.selectedPokemon.get(0);
-                            xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
-                            Condivisa.client.invia(xml);
+                            if (!inviaPrimoPokemon) {
+                                Pokemon send = Condivisa.selectedPokemon.get(0);
+                                Condivisa.myCurrentPokemon = send;
+                                xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
+                                Condivisa.client.invia(xml);
+                                inviaPrimoPokemon = true;
+                            }
                             inviaNick = false;
-                            Condivisa.battle_starting = true;
-                            Condivisa.battle_sendMyPokemon = true;
+                            //Condivisa.battleStarting.running = true;
+                            //Condivisa.sendMyPokemon.running = true;
                             Condivisa.myCurrentPokemon = Condivisa.selectedPokemon.get(0);
                         }
                     }
@@ -53,6 +57,7 @@ public class GameLogic {
                 String cmd = "";
                 if (leggiEvento(cmd)) {
                     if (cmd.equals("s")) {
+                        System.out.println("test");
                         //invia pokemon
                         //invia attacco
                     }
@@ -110,42 +115,79 @@ public class GameLogic {
                     int vita = parser.getVitaPokemon();
                     String[] tipi = {parser.getTipoPokemon()};
                     Condivisa.enemyPokemon = new Pokemon(nome, vita, tipi);
+                    //Condivisa.sendEnemyPokeon.running = true;
+                    if (!inviaPrimoPokemon) {
+                        Pokemon send = Condivisa.selectedPokemon.get(0);
+                        Condivisa.myCurrentPokemon = send;
+                        String xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
+                        Condivisa.client.invia(xml);
+                        inviaPrimoPokemon = true;
+                    }
 
-                    Pokemon send = Condivisa.selectedPokemon.get(0);
-                    String xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
-                    Condivisa.client.invia(xml);
                     //in seguito inviare l'attacco dopo input
                     break;
 
                 case "a":
-                    System.out.println("Nome mossa: " + parser.getNomeMossa());
-                    System.out.println("Tipo mossa: " + parser.getTipoMossa());
-                    System.out.println("Danni mossa: " + parser.getDanniMossa());
-                    System.out.println("Tipo Status: " + parser.getTipoStatus());
-                    System.out.println("Probabilità Status: " + parser.getProbStatus());
+                    System.out.println("Ricevuto attacco dall'avversario");
+//                    System.out.println("Nome mossa: " + parser.getNomeMossa());
+//                    System.out.println("Tipo mossa: " + parser.getTipoMossa());
+//                    System.out.println("Danni mossa: " + parser.getDanniMossa());
+//                    System.out.println("Tipo Status: " + parser.getTipoStatus());
+//                    System.out.println("Probabilità Status: " + parser.getProbStatus());
+
+                    Pokemon p = Condivisa.myCurrentPokemon;
+
+                    int vitaRimanente = p.getLife() - parser.getDanniMossa();
+                    Condivisa.myCurrentPokemon.setLife(vitaRimanente);
+                    int molt = 0;
+                    String note = "";
+                    String xml = "";
+                    if (vitaRimanente <= 0) {
+                        if (Condivisa.pokemonRimanenti < 0) {
+                            //resa obbligatoria
+                        } else {
+                            Condivisa.level++;
+                            Condivisa.handler.clearLevel();
+                            Condivisa.game.createLevel(Condivisa.level);
+                        }
+
+                        xml = parser.getXMLPokemonSconfitto(Condivisa.myCurrentPokemon.getName());
+                    } else {
+                        xml = parser.getXMLRispostaAttacco(vitaRimanente, molt, p.getStatus(), note);
+                    }
+                    Condivisa.client.invia(xml);
                     break;
                 case "r":
-                    System.out.println("Vita rimanente: " + parser.getVitaRimanente());
-                    System.out.println("Moltiplicatore: " + parser.getMoltiplicatore());
-                    System.out.println("Status vita: " + parser.getStatus());
-                    System.out.println("Note: " + parser.getNote());
+                    System.out.println("Ricevuta risposta attacco");
+//                    System.out.println("Vita rimanente: " + parser.getVitaRimanente());
+//                    System.out.println("Moltiplicatore: " + parser.getMoltiplicatore());
+//                    System.out.println("Status vita: " + parser.getStatus());
+//                    System.out.println("Note: " + parser.getNote());
+                    xml = parser.getXMLPassoTurno();
+                    Condivisa.client.invia(xml);
                     break;
                 case "i":
                     System.out.println("Oggetto: " + parser.getOggetto());
                     System.out.println("Nome Pokemon: " + parser.getNomePokemon());
                     System.out.println("Vita attuale: " + parser.getVitaAttuale());
+                    //visualizzare a schermo
+                    
                     break;
                 case "f":
                     System.out.println("L'avversario si è arreso");
+                    //visualizzare a schermo
                     break;
                 case "c":
                     System.out.println("Nome: " + parser.getNomePokemon());
                     System.out.println("Vita: " + parser.getVitaPokemon());
                     System.out.println("Tipo: " + parser.getTipoPokemon());
+                    //inviare attacco
                     break;
 
                 case "l":
                     System.out.println("Nome Pokemon: " + parser.getNomePokemon());
+                    //visualizzare pokemon sconfitto
+                    //attendere l'avversario
                     break;
                 case "e":
                     System.out.println("Nome Pokemon: " + parser.getNomePokemon());
@@ -154,6 +196,13 @@ public class GameLogic {
                     System.out.println("Aggiunta: " + parser.getDOTAggiunta());
                     System.out.println("Dps: " + parser.getDOTDps());
                     System.out.println("Tipo: " + parser.getDOTTipo());
+                    //visualizzare a schermo
+                    break;
+                case "p":
+                    System.out.println("Ricevuto fine turno avversario");
+                    Pokemon temp = Condivisa.myCurrentPokemon;
+                    xml = parser.getXMLStatus(temp.getName(), temp.getStatus(), temp.getDanniOverTime_aggiunta(), temp.getDanniOverTime_dps(), temp.getDanniOverTime_tipo(), temp.getLife());
+                    Condivisa.client.invia(xml);
                     break;
             }
             return true;
