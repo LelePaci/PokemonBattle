@@ -18,7 +18,7 @@ import pokemonbattle.util.*;
  */
 public class Condivisa {
 
-    public static int level = 0;
+    public static int level = 3;
     // 0 -> inserimento nome
     // 1 -> scelta pokemon
     // 2 -> connessione
@@ -32,12 +32,17 @@ public class Condivisa {
     public static GameLogic gameLogic;
     public static TCPServer server;
     public static TCPClient client;
-    
+
+    public static int gameWIDTH;
+    public static int gameHEIGHT;
+
     //myGame
     public static String myName = "guest";
     public static List<Pokemon> selectedPokemon = new ArrayList(); //lista dei pokemon scelti dal giocatore
     public static Pokemon myCurrentPokemon;
     public static int pokemonRimanenti = selectedPokemon.size();
+    public static final Inventario inventario = new Inventario();
+
     //enemyGame
     public static String enemyName = "guest";
     public static Pokemon enemyPokemon;
@@ -57,11 +62,19 @@ public class Condivisa {
 
     //Level: Battaglia
     public static String battleBackgroundPath = ""; //Percorso del background della lotta, in modo che quando viene ricaricata la schermata non cambia random
-    public static int defaultCooldown = 60;
-    public static boolean battle_starting = true; //Visualizzazione messaggio inizio battaglia
-    public static int battle_startingCooldown = defaultCooldown;
-    public static boolean battle_sendEnemyPokemon = false;
-    public static int battle_sendEnemyPokemonCooldown = defaultCooldown;
-    public static boolean battle_sendMyPokemon = false;
-    public static int battle_sendMyPokemonCooldown = defaultCooldown;
+    public static int defaultCooldown = 70;
+    public static PEvent battleStarting = new PEvent("battleStarting", false, defaultCooldown);
+    public static PEvent sendMyPokemon = new PEvent("sendMyPokemon", false, defaultCooldown);
+    public static PEvent sendEnemyPokemon = new PEvent("sendEnemyPokeon", false, defaultCooldown);
+
+    public static PEventList eventList;
+
+    public static boolean myPokemonInCampo;
+    public static boolean enemyPokemonInCampo;
+
+    public static boolean gameInput;
+
+    public static int selectedArrow = 0;
+    public static List<GenericObject> arrows = new ArrayList();
+    public static GenericObject mossaMenu;
 }

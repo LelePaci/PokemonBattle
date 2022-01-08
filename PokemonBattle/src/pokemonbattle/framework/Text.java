@@ -106,21 +106,34 @@ public class Text {
                 int secondLine = Game.HEIGHT - 65;
                 int leftSpacing = 50;
                 toAdd.add(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black));
-                if (Condivisa.battle_starting) {
+                if (Condivisa.battleStarting.running) {
                     toAdd.add(new Text("Inizia la battaglia con ", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                     toAdd.add(new Text(Condivisa.enemyName, leftSpacing, secondLine, pokeFont.getFont(40f), Color.red));
                 }
 
-                if (Condivisa.battle_sendEnemyPokemon) {
-                    toAdd.add(new Text("E' il turno di " + "" + "mandato in", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                if (Condivisa.sendEnemyPokemon.running) {
+                    toAdd.add(new Text("E' il turno di " + Condivisa.enemyPokemon.getName() + ", mandato in", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                     toAdd.add(new Text("campo da " + Condivisa.enemyName, leftSpacing, secondLine, pokeFont.getFont(40f), Color.white));
                 }
-                
-                if (Condivisa.battle_sendMyPokemon) {
+
+                if (Condivisa.sendMyPokemon.running) {
                     toAdd.add(new Text("Vai, " + Condivisa.myCurrentPokemon.getName(), leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
-                    
+
+                }
+
+                if (Condivisa.enemyPokemonInCampo) {
+                    toAdd.add(new Text(Condivisa.enemyPokemon.getName(), 62, 67, pokeFont.getFont(30f), Color.black));
+                    toAdd.add(new Text(Condivisa.enemyPokemon.getLife() + "/" + Condivisa.enemyPokemon.maxLife, 272, 87, pokeFont.getFont(30f), Color.black));
+                }
+                if (Condivisa.myPokemonInCampo) {
+                    toAdd.add(new Text(Condivisa.myCurrentPokemon.getName() , 600, 330, pokeFont.getFont(30f), Color.black));
+                    toAdd.add(new Text(Condivisa.myCurrentPokemon.getLife() + "/" + Condivisa.myCurrentPokemon.maxLife, 830, 350, pokeFont.getFont(30f), Color.black));
                 }
                 
+                if (Condivisa.gameInput) {
+                    toAdd.add(new Text("Cosa deve fare", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                    toAdd.add(new Text(Condivisa.myCurrentPokemon.getName() + "?", leftSpacing, secondLine, pokeFont.getFont(40f), Color.white));
+                }
 
                 this.setData(toAdd);
                 toAdd.clear();

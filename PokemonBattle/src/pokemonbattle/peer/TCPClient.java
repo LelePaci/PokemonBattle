@@ -80,6 +80,7 @@ public class TCPClient extends Thread {
     public void invia(String xml) {
         System.out.println("Inviato messaggio: " + xml);
         out.println(xml);
+        out.flush();
     }
 
     public boolean isConnected() {

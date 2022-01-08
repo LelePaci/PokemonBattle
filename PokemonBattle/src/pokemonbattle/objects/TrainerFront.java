@@ -8,6 +8,7 @@ package pokemonbattle.objects;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import pokemonbattle.framework.*;
+import pokemonbattle.main.*;
 
 /**
  *
@@ -15,11 +16,16 @@ import pokemonbattle.framework.*;
  */
 public class TrainerFront extends GameObject {
 
+    private final Texture[] animationFrames = new Texture[4];
+    private float startX;
+    private float finalX;
+
     public TrainerFront(float x, float y, int type, int sizeMultiplier) {
         super(x, y, sizeMultiplier);
         init(type);
+
     }
-    
+
     public final void init(int type) {
         if (type == 1) {
             this.texture = new Texture("res/trainers.png", 400, 128, 96, 104);
@@ -30,11 +36,25 @@ public class TrainerFront extends GameObject {
 
         width = texture.image.getWidth() * sizeMultiplier;
         height = texture.image.getHeight() * sizeMultiplier;
+
+        startX = Condivisa.gameWIDTH + width;
+        finalX = x;
+        x = startX;
     }
 
     @Override
     public void tick(LinkedList<GameObject> object) {
+        if (Condivisa.battleStarting.running) {
+            if (x > finalX) {
+                x -= 10;
+            }
+        }
+        if (Condivisa.sendEnemyPokemon.running) {
 
+            if (x < startX) {
+                x += 10;
+            }
+        }
     }
 
     @Override

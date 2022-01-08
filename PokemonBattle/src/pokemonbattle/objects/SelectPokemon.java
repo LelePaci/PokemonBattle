@@ -46,7 +46,7 @@ public class SelectPokemon extends GameObject {
 
         String name = pokemon.getName();
         System.out.println("Added Pokemon: " + name);
-        texture = new Texture("res/pokedex/images/" + name.toLowerCase() + "-front.png", 0, 0, 64, 64);
+        texture = new Texture(pokemon.getImageFront(), 0, 0, 64, 64);
         relX = (int) x + 10;
         relY = (int) y + 10;
         pkmn = new GenericObject(relX, relY,

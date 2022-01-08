@@ -115,7 +115,7 @@ public class XMLParser {
                         String tipo = e.getElementsByTagName("tipo").item(0).getTextContent();
                         String danni = e.getElementsByTagName("danni").item(0).getTextContent();
                         String utilizziMax = e.getElementsByTagName("utilizziMax").item(0).getTextContent();
-                        mosse[IndiceMossa] = new Mossa(nomeM, tipo, Integer.parseInt(danni), Integer.parseInt(utilizziMax));
+                        mosse[IndiceMossa] = new Mossa(nomeM, tipo, Integer.parseInt(utilizziMax), Integer.parseInt(danni), "", 0);
                     }
                     IndiceMossa++;
                 }
@@ -194,9 +194,9 @@ public class XMLParser {
         return Integer.parseInt(prob);
     }
 
-    public String getVitaRimanente() {
+    public int getVitaRimanente() {
         String vitaRimanente = doc.getElementsByTagName("vitaRimanente").item(0).getTextContent();
-        return (vitaRimanente);
+        return Integer.parseInt(vitaRimanente);
     }
 
     public String getMoltiplicatore() {
@@ -531,6 +531,7 @@ public class XMLParser {
         }
         return null;
     }
+
     public String getXMLPassoTurno() {
         try {
             Document doc = dBuilder.newDocument();

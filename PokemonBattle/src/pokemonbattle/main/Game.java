@@ -39,12 +39,13 @@ public class Game extends Canvas implements Runnable {
     private final PokeFont pokeFont = Condivisa.pokeFont;
     private final XMLParser parser = new XMLParser();
     private static Game game;
+    private static PEventList eventList;
 
     public Game() {
         Window window = new Window(960, 640, "Pokemon Battle", this);
         Condivisa.gameLogic = new GameLogic();
-        HEIGHT = getHeight();
-        WIDTH = getWidth();
+        Condivisa.gameHEIGHT = HEIGHT = getHeight();
+        Condivisa.gameWIDTH = WIDTH = getWidth();
     }
 
     public static void main(String[] args) {
@@ -91,28 +92,25 @@ public class Game extends Canvas implements Runnable {
     public void init() {
         handler = new Handler();
         Condivisa.handler = handler;
-        input = new KeyInput(this, handler, text);
+        input = new KeyInput(this, handler);
         Condivisa.input = input;
         this.addKeyListener(input);
         createLevel(Condivisa.level);
+        eventList = new PEventList();
+        eventList.start();
+        Condivisa.eventList = eventList;
     }
 
     public void tick() {
         //Controllo errore di input dell'indirizzo IP
         if (Condivisa.errorAddress) {
-            eventCD(Condivisa.errorAddress, Condivisa.errorAddressCooldown);
-        }
-        //Visualizzazione messaggio ad inizio partita
-        if (Condivisa.battle_starting) {
-            eventCD(Condivisa.battle_starting, Condivisa.battle_startingCooldown);
-        }
-        //Visualizzazione messaggio invio pokemon in campo avversario
-        if (Condivisa.battle_sendEnemyPokemon) {
-            eventCD(Condivisa.battle_sendEnemyPokemon, Condivisa.battle_sendEnemyPokemonCooldown);
-        }
-        //Visualizzazione messaggio mio invio pokemon 
-        if (Condivisa.battle_sendMyPokemon) {
-            eventCD(Condivisa.battle_sendMyPokemon, Condivisa.battle_sendMyPokemonCooldown);
+            if (Condivisa.errorAddressCooldown > 0) {
+                Condivisa.errorAddressCooldown--;
+            }
+            if (Condivisa.errorAddressCooldown == 0) {
+                Condivisa.errorAddressCooldown = Condivisa.errorAddressCooldownDefault;
+                Condivisa.errorAddress = false;
+            }
         }
 
         handler.tick();
@@ -203,22 +201,68 @@ public class Game extends Canvas implements Runnable {
                 }
                 handler.add(new Background(Condivisa.battleBackgroundPath, 0, 0, WIDTH, HEIGHT));
 
+                handler.add(new TrainerFront(710, 30, 2, 3));
+                handler.add(new TrainerBack(130, 192, 4));
+
+                handler.add(new Pokemon(230, 208, false));
+                handler.add(new Pokemon(700, 30, true));
+
                 texture = new Texture("res/ingame-menu/bottom-bar.png", 0, 0, 240, 48);
                 handler.add(new GenericObject(0, HEIGHT - texture.getSize(4).height,
                         texture.getSize(4).width,
                         texture.getSize(4).height, texture));
 
-                break;
-        }
-    }
+                texture = new Texture("res/ingame-menu/enemy-bar.png", 0, 0, 100, 29);
+                handler.add(new GenericObject(40, 30,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture));
 
-    public void eventCD(boolean event, int eventCD) {
-        if (eventCD > 0) {
-            eventCD--;
-        }
-        if (eventCD == 0) {
-            eventCD = Condivisa.errorAddressCooldownDefault;
-            event = false;
+                texture = new Texture("res/ingame-menu/my-bar.png", 0, 0, 104, 37);
+                handler.add(new GenericObject(WIDTH - texture.getSize(4).width, HEIGHT - texture.getSize(4).height - 200,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture));
+
+                texture = new Texture("res/ingame-menu/menu.png", 0, 0, 120, 48);
+                handler.add(new GenericObject(WIDTH - texture.getSize(4).width, HEIGHT - texture.getSize(4).height,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture, "battleMenu"));
+
+                texture = new Texture("res/ingame-menu/empty-240.48.png", 0, 0, 240, 48);
+                Condivisa.mossaMenu = new GenericObject(0, HEIGHT - texture.getSize(4).height,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture);
+                handler.add(Condivisa.mossaMenu);
+                
+                
+                texture = new Texture("res/ingame-menu/arrow.png", 0, 0, 6, 10);
+                GenericObject arr1 = new GenericObject(519, 499,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture, "arrow1");
+                Condivisa.arrows.add(arr1);
+                handler.add(arr1);
+
+                texture = new Texture("res/ingame-menu/empty-6.10.png", 0, 0, 6, 10);
+                GenericObject arr2 = new GenericObject(739, 499,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture, "arrow2");
+                Condivisa.arrows.add(arr2);
+                handler.add(arr2);
+
+                GenericObject arr3 = new GenericObject(519, 563,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture, "arrow3");
+                Condivisa.arrows.add(arr3);
+                handler.add(arr3);
+
+                GenericObject arr4 = new GenericObject(739, 563,
+                        texture.getSize(4).width,
+                        texture.getSize(4).height, texture, "arrow3");
+                Condivisa.arrows.add(arr4);
+                handler.add(arr4);
+
+                
+
+                break;
         }
     }
 }

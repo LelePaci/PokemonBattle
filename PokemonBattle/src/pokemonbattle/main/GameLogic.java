@@ -16,17 +16,17 @@ import pokemonbattle.util.*;
  * @author matti
  */
 public class GameLogic {
-
+    
     private static List<String> listPeerEvent;
     private final XMLParser parser = new XMLParser();
     private boolean inviaNick = true;
     private boolean turno;
     private boolean inviaPrimoPokemon = false;
-
+    
     public GameLogic() {
         listPeerEvent = new ArrayList();
     }
-
+    
     public void tick() {
         if (Condivisa.client != null) {
             if (Condivisa.client.isConnected()) {
@@ -46,10 +46,12 @@ public class GameLogic {
                                 xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
                                 Condivisa.client.invia(xml);
                                 inviaPrimoPokemon = true;
+                                Condivisa.myPokemonInCampo = true;
                             }
                             inviaNick = false;
-                            //Condivisa.battleStarting.running = true;
+                            //
                             //Condivisa.sendMyPokemon.running = true;
+                            Condivisa.eventList.addEvent(Condivisa.sendMyPokemon);
                             Condivisa.myCurrentPokemon = Condivisa.selectedPokemon.get(0);
                         }
                     }
@@ -85,11 +87,11 @@ public class GameLogic {
             }
         }
     }
-
+    
     public void addPeerEvent(String toAdd) {
         listPeerEvent.add(toAdd);
     }
-
+    
     public void printListPeerEvent() {
         if (!listPeerEvent.isEmpty()) {
             for (int i = 0; i < listPeerEvent.size(); i++) {
@@ -97,7 +99,7 @@ public class GameLogic {
             }
         }
     }
-
+    
     private boolean leggiEvento(String cmd) {
         if (!listPeerEvent.isEmpty()) {
             parser.parseString(listPeerEvent.get(0));
@@ -108,25 +110,28 @@ public class GameLogic {
                 case "m":
                     Condivisa.enemyName = parser.getNomeAllenatore();
                     System.out.println("Ricevuto nickname: " + Condivisa.enemyName);
+                    Condivisa.eventList.addEvent(Condivisa.battleStarting);
                     break;
                 case "s":
                     System.out.println("Ricevuto primo pokemon avversario");
+                    Condivisa.enemyPokemonInCampo = true;
+                    Condivisa.eventList.addEvent(Condivisa.sendEnemyPokemon);
                     String nome = parser.getNomePokemon();
                     int vita = parser.getVitaPokemon();
                     String[] tipi = {parser.getTipoPokemon()};
                     Condivisa.enemyPokemon = new Pokemon(nome, vita, tipi);
-                    //Condivisa.sendEnemyPokeon.running = true;
                     if (!inviaPrimoPokemon) {
                         Pokemon send = Condivisa.selectedPokemon.get(0);
                         Condivisa.myCurrentPokemon = send;
                         String xml = parser.getXMLInvioPokemon("s", send.getName(), send.getLife(), send.getType());
                         Condivisa.client.invia(xml);
                         inviaPrimoPokemon = true;
+                        Condivisa.eventList.addEvent(Condivisa.sendMyPokemon);
+                        Condivisa.myPokemonInCampo = true;
                     }
-
                     //in seguito inviare l'attacco dopo input
                     break;
-
+                
                 case "a":
                     System.out.println("Ricevuto attacco dall'avversario");
 //                    System.out.println("Nome mossa: " + parser.getNomeMossa());
@@ -136,7 +141,7 @@ public class GameLogic {
 //                    System.out.println("Probabilità Status: " + parser.getProbStatus());
 
                     Pokemon p = Condivisa.myCurrentPokemon;
-
+                    
                     int vitaRimanente = p.getLife() - parser.getDanniMossa();
                     Condivisa.myCurrentPokemon.setLife(vitaRimanente);
                     int molt = 0;
@@ -150,7 +155,7 @@ public class GameLogic {
                             Condivisa.handler.clearLevel();
                             Condivisa.game.createLevel(Condivisa.level);
                         }
-
+                        
                         xml = parser.getXMLPokemonSconfitto(Condivisa.myCurrentPokemon.getName());
                     } else {
                         xml = parser.getXMLRispostaAttacco(vitaRimanente, molt, p.getStatus(), note);
@@ -163,6 +168,7 @@ public class GameLogic {
 //                    System.out.println("Moltiplicatore: " + parser.getMoltiplicatore());
 //                    System.out.println("Status vita: " + parser.getStatus());
 //                    System.out.println("Note: " + parser.getNote());
+                    Condivisa.enemyPokemon.setLife(parser.getVitaRimanente());
                     xml = parser.getXMLPassoTurno();
                     Condivisa.client.invia(xml);
                     break;
@@ -183,16 +189,17 @@ public class GameLogic {
                     System.out.println("Tipo: " + parser.getTipoPokemon());
                     //inviare attacco
                     break;
-
+                
                 case "l":
                     System.out.println("Nome Pokemon: " + parser.getNomePokemon());
                     //visualizzare pokemon sconfitto
                     //attendere l'avversario
+                    Condivisa.enemyPokemonInCampo = false;
                     break;
                 case "e":
                     System.out.println("Nome Pokemon: " + parser.getNomePokemon());
                     System.out.println("Status: " + parser.getStatus());
-
+                    
                     System.out.println("Aggiunta: " + parser.getDOTAggiunta());
                     System.out.println("Dps: " + parser.getDOTDps());
                     System.out.println("Tipo: " + parser.getDOTTipo());
@@ -210,7 +217,7 @@ public class GameLogic {
             return false;
         }
     }
-
+    
     public void connectionReceived() {
         Condivisa.level++;
         Condivisa.handler.clearLevel();
@@ -218,7 +225,7 @@ public class GameLogic {
         Condivisa.client = Condivisa.server.getClient();
         turno = Condivisa.client.isFirstPeer();
     }
-
+    
     public void connectionStarted() {
         Condivisa.level++;
         Condivisa.handler.clearLevel();
