@@ -67,7 +67,7 @@ public class Condivisa {
     public static PEvent sendMyPokemon = new PEvent("sendMyPokemon", false, defaultCooldown);
     public static PEvent sendEnemyPokemon = new PEvent("sendEnemyPokeon", false, defaultCooldown);
     public static PEvent waitEnemyStart = new PEvent("waitEnemyStart", false, defaultCooldown);
-    
+
     public static PEventList eventList;
 
     public static boolean myPokemonInCampo;
@@ -94,7 +94,10 @@ public class Condivisa {
     public static int XPosMaxPP = 885;
     public static int XPosType;
     public static int YPosType;
-    
+
     public static boolean waitingEnemy = false;
+
+    //Zaino
+    public static List<ChangePokemon> changeList = new ArrayList();
 
 }

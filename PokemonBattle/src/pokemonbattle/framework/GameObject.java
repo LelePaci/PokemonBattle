@@ -111,4 +111,8 @@ public abstract class GameObject {
     public void setVelY(float velY) {
         this.velY = velY;
     }
+
+    public float getHeight() {
+        return height;
+    }    
 }

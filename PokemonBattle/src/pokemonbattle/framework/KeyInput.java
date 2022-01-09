@@ -162,7 +162,7 @@ public class KeyInput extends KeyAdapter {
                 if (key == 10) {
                     if (!Condivisa.waitingEnemy) {
 
-                        System.out.println(Condivisa.selectedArrow);
+//                        System.out.println(Condivisa.selectedArrow);
                         if (!Condivisa.showMosse) {
                             switch (Condivisa.selectedArrow) {
                                 case 0:

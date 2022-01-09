@@ -159,6 +159,20 @@ public class Text {
                 this.setData(toAdd);
                 toAdd.clear();
                 break;
+            case 4:
+                for (int i = 0; i <  Condivisa.changeList.size() ; i++) {
+                    Pokemon temp = Condivisa.changeList.get(i).getPokemon();
+                    String nome = temp.getName();
+                    int life = temp.getLife();
+                    int tempX = Condivisa.changeList.get(i).getRelX();
+                    int tempY = Condivisa.changeList.get(i).getRelY();
+                    toAdd.add(new Text(nome, tempX + 63, tempY + 55, pokeFont.getFont(20f), Color.black));
+                    toAdd.add(new Text(life + "", tempX + 75, tempY + 93, pokeFont.getFont(20f), Color.black));
+                    toAdd.add(new Text(life + "", tempX + 120, tempY + 93, pokeFont.getFont(20f), Color.black));
+                }
+                this.setData(toAdd);
+                toAdd.clear();
+                break;
         }
     }
 

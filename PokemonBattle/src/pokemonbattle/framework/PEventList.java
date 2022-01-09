@@ -42,7 +42,7 @@ public class PEventList extends Thread {
                 PEvent event = list.get(0);
                 event.running = true;
                 if (event.running) {
-                    System.out.println(event.name + " " + event.cooldown);
+//                    System.out.println(event.name + " " + event.cooldown);
                     if (event.cooldown > 0) {
                         event.cooldown--;
 
