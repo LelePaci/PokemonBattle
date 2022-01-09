@@ -18,7 +18,7 @@ import pokemonbattle.util.*;
  */
 public class Condivisa {
 
-    public static int level = 3;
+    public static int level = 1;
     // 0 -> inserimento nome
     // 1 -> scelta pokemon
     // 2 -> connessione
@@ -77,4 +77,23 @@ public class Condivisa {
     public static int selectedArrow = 0;
     public static List<GenericObject> arrows = new ArrayList();
     public static GenericObject mossaMenu;
+
+    public static int firstLine = 529;
+    public static int secondLine = 577;
+
+    public static boolean showMosse = false;
+    public static int mosseX1 = 70;
+    public static int mosseX2 = mosseX1 + 260;
+
+    public static int[] XPosArrow = {519, 739, mosseX1 - 25, mosseX2 - 25};
+    public static int[] YPosArrow = {499, 563, 542};
+
+    public static int XPosPP;
+    public static int YPosPP = 528;
+    public static int XPosMaxPP = 885;
+    public static int XPosType;
+    public static int YPosType;
+    
+    public static boolean waitingEnemy = false;
+
 }

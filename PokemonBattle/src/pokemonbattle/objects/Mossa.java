@@ -21,6 +21,7 @@ public class Mossa extends GameObject {
     private int danni;
     private String tipoStatus;
     private int probStatus;
+    private int maxPP;
 
     public Mossa(String nome, String tipo, int utilizzi, int danni, String tipoStatus, int probStatus) {
         super(0, 0);
@@ -30,6 +31,7 @@ public class Mossa extends GameObject {
         this.danni = danni;
         this.tipoStatus = tipoStatus;
         this.probStatus = probStatus;
+        this.maxPP = utilizzi;
     }
 
     public String getNome() {
@@ -54,6 +56,10 @@ public class Mossa extends GameObject {
 
     public int getProbStatus() {
         return probStatus;
+    }
+
+    public int getMaxPP() {
+        return maxPP;
     }
 
     @Override

@@ -235,26 +235,28 @@ public class Game extends Canvas implements Runnable {
                 
                 
                 texture = new Texture("res/ingame-menu/arrow.png", 0, 0, 6, 10);
-                GenericObject arr1 = new GenericObject(519, 499,
+                int[] tX = Condivisa.XPosArrow;
+                int[] tY = Condivisa.YPosArrow;
+                GenericObject arr1 = new GenericObject(tX[0], tY[0],
                         texture.getSize(4).width,
                         texture.getSize(4).height, texture, "arrow1");
                 Condivisa.arrows.add(arr1);
                 handler.add(arr1);
 
                 texture = new Texture("res/ingame-menu/empty-6.10.png", 0, 0, 6, 10);
-                GenericObject arr2 = new GenericObject(739, 499,
+                GenericObject arr2 = new GenericObject(tX[1], tY[0],
                         texture.getSize(4).width,
                         texture.getSize(4).height, texture, "arrow2");
                 Condivisa.arrows.add(arr2);
                 handler.add(arr2);
 
-                GenericObject arr3 = new GenericObject(519, 563,
+                GenericObject arr3 = new GenericObject(tX[0],  tY[1],
                         texture.getSize(4).width,
                         texture.getSize(4).height, texture, "arrow3");
                 Condivisa.arrows.add(arr3);
                 handler.add(arr3);
 
-                GenericObject arr4 = new GenericObject(739, 563,
+                GenericObject arr4 = new GenericObject( tX[1],  tY[1],
                         texture.getSize(4).width,
                         texture.getSize(4).height, texture, "arrow3");
                 Condivisa.arrows.add(arr4);

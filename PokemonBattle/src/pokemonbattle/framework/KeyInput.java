@@ -17,19 +17,19 @@ import pokemonbattle.util.*;
  * @author pacie
  */
 public class KeyInput extends KeyAdapter {
-    
+
     private final Handler handler;
     public String name = "";
     public String ipAddress = "";
     private final Game game;
     private XMLParser parser;
-    
+
     public KeyInput(Game game, Handler handler) {
         this.handler = handler;
         this.game = game;
         this.parser = new XMLParser();
     }
-    
+
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -60,7 +60,7 @@ public class KeyInput extends KeyAdapter {
                     game.createLevel(Condivisa.level);
                 }
                 break;
-            
+
             case 1:
                 if (key == 39) {
                     if (Condivisa.hoveredPokemonID + 1 < Condivisa.pokedexCount) {
@@ -105,7 +105,7 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 break;
-            
+
             case 2:
                 if (key >= 48 && key <= 57 || key == 46) {
                     if (ipAddress.length() < 15) {
@@ -119,7 +119,7 @@ public class KeyInput extends KeyAdapter {
                         ipAddress += ".";
                     }
                 }
-                
+
                 if (key == 8) {
                     if (ipAddress.length() > 0) {
                         ipAddress = ipAddress.substring(0, ipAddress.length() - 1);
@@ -138,6 +138,7 @@ public class KeyInput extends KeyAdapter {
                     if (Condivisa.selectedArrow + 1 < 4) {
                         Condivisa.selectedArrow += 1;
                         refreshArrow();
+
                     }
                 }
                 if (key == 37) {
@@ -159,21 +160,44 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 if (key == 10) {
-                    Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/mossa-menu.png", 0, 0, 240, 48));
+                    if (!Condivisa.showMosse) {
+                        Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/mossa-menu.png", 0, 0, 240, 48));
+                        Condivisa.arrows.get(0).x = Condivisa.XPosArrow[2];
+                        Condivisa.arrows.get(1).x = Condivisa.XPosArrow[3];
+                        Condivisa.arrows.get(2).x = Condivisa.XPosArrow[2];
+                        Condivisa.arrows.get(3).x = Condivisa.XPosArrow[3];
+
+                        Condivisa.arrows.get(2).y = Condivisa.YPosArrow[2];
+                        Condivisa.arrows.get(3).y = Condivisa.YPosArrow[2];
+
+                        Condivisa.showMosse = true;
+                    } else if(!Condivisa.waitingEnemy){
+                        Mossa mossa = Condivisa.myCurrentPokemon.getMosse()[Condivisa.selectedArrow];
+                        String xml = parser.getXMLAttacco(mossa.getNome(), mossa.getTipo(), mossa.getDanni(), mossa.getTipoStatus(), mossa.getProbStatus());
+                        Condivisa.client.invia(xml);
+
+                        Condivisa.arrows.get(0).x = Condivisa.XPosArrow[0];
+                        Condivisa.arrows.get(1).x = Condivisa.XPosArrow[1];
+                        Condivisa.arrows.get(2).x = Condivisa.XPosArrow[0];
+                        Condivisa.arrows.get(3).x = Condivisa.XPosArrow[1];
+
+                        Condivisa.arrows.get(2).y = Condivisa.YPosArrow[1];
+                        Condivisa.arrows.get(3).y = Condivisa.YPosArrow[1];
+
+                        Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/empty-240.48.png", 0, 0, 240, 48));
+                        Condivisa.showMosse = false;
+                        Condivisa.waitingEnemy = true;
+                    }
+                    if (Condivisa.waitingEnemy) {
+                        //sostanzialmente nulla
+                    }
+                    Condivisa.selectedArrow = 0; //In ogni caso la freccia si resetta sulla prima posizione
                 }
 
                 /*
-                if (key == 68) {
-                    Condivisa.eventList.addEvent(Condivisa.battleStarting);
-                }
+
                 if (key == 69) {
                     Condivisa.eventList.addEvent(Condivisa.sendEnemyPokemon);
-                }
-                if (key == 65) {
-                    //invio attacco
-                    Mossa mossa = Condivisa.myCurrentPokemon.getMossa(1);
-                    String xml = parser.getXMLAttacco(mossa.getNome(), mossa.getTipo(), mossa.getDanni(), mossa.getTipoStatus(), mossa.getProbStatus());
-                    Condivisa.client.invia(xml);
                 }
                 if (key == 67) {
                     //invio i
@@ -196,19 +220,19 @@ public class KeyInput extends KeyAdapter {
                     Condivisa.myCurrentPokemon = temp;
                     String xml = parser.getXMLInvioPokemon("c", temp.getName(), temp.getLife(), temp.getType());
                     Condivisa.client.invia(xml);
-                    
+
                     Condivisa.level--;
                     Condivisa.handler.clearLevel();
                     Condivisa.game.createLevel(Condivisa.level);
                 }
         }
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
-    
+
     private void refreshPokedex() {
         for (int i = 0; i < Condivisa.pokedex.size(); i++) {
             if (!Condivisa.pokedex.get(i).isSelected()) {
@@ -219,8 +243,8 @@ public class KeyInput extends KeyAdapter {
             Condivisa.pokedex.get(Condivisa.hoveredPokemonID).changeTexture(1);
         }
     }
-    
-    private void refreshArrow() {        
+
+    private void refreshArrow() {
         for (int i = 0; i < Condivisa.arrows.size(); i++) {
             if (true) {
                 Condivisa.arrows.get(i).changeTexture(new Texture("res/ingame-menu/empty-6.10.png", 0, 0, 6, 10));

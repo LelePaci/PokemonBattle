@@ -11,8 +11,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import pokemonbattle.main.Condivisa;
-import pokemonbattle.main.Game;
+import pokemonbattle.main.*;
 import static pokemonbattle.main.Game.stats;
 import pokemonbattle.objects.*;
 
@@ -102,9 +101,10 @@ public class Text {
                 toAdd.clear();
                 break;
             case 3:
-                int firstLine = Game.HEIGHT - 113;
-                int secondLine = Game.HEIGHT - 65;
-                int leftSpacing = 50;
+                int firstLine = Condivisa.firstLine;
+                int secondLine = Condivisa.secondLine;
+
+                int leftSpacing = 60;
                 toAdd.add(new Text(stats, 5, 12, pokeFont.getFont(10f), Color.black));
                 if (Condivisa.battleStarting.running) {
                     toAdd.add(new Text("Inizia la battaglia con ", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
@@ -126,13 +126,35 @@ public class Text {
                     toAdd.add(new Text(Condivisa.enemyPokemon.getLife() + "/" + Condivisa.enemyPokemon.maxLife, 272, 87, pokeFont.getFont(30f), Color.black));
                 }
                 if (Condivisa.myPokemonInCampo) {
-                    toAdd.add(new Text(Condivisa.myCurrentPokemon.getName() , 600, 330, pokeFont.getFont(30f), Color.black));
+                    toAdd.add(new Text(Condivisa.myCurrentPokemon.getName(), 600, 330, pokeFont.getFont(30f), Color.black));
                     toAdd.add(new Text(Condivisa.myCurrentPokemon.getLife() + "/" + Condivisa.myCurrentPokemon.maxLife, 830, 350, pokeFont.getFont(30f), Color.black));
                 }
-                
-                if (Condivisa.gameInput) {
+
+                if (Condivisa.gameInput && !Condivisa.showMosse) {
                     toAdd.add(new Text("Cosa deve fare", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                     toAdd.add(new Text(Condivisa.myCurrentPokemon.getName() + "?", leftSpacing, secondLine, pokeFont.getFont(40f), Color.white));
+                }
+
+                if (Condivisa.showMosse) {
+                    Mossa[] mosse = Condivisa.myCurrentPokemon.getMosse();
+                    toAdd.add(new Text(mosse[0].getNome(), Condivisa.mosseX1, firstLine, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(mosse[1].getNome(), Condivisa.mosseX2, firstLine, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(mosse[2].getNome(), Condivisa.mosseX1, secondLine, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(mosse[3].getNome(), Condivisa.mosseX2, secondLine, pokeFont.getFont(40f), Color.black));
+//                    toAdd.add(new Text("Azione", Condivisa.mosseX1, firstLine, pokeFont.getFont(40f), Color.black));
+//                    toAdd.add(new Text("Fangobomba", Condivisa.mosseX2, firstLine, pokeFont.getFont(40f), Color.black));
+//                    toAdd.add(new Text("Foglielama", Condivisa.mosseX1, secondLine, pokeFont.getFont(40f), Color.black));
+//                    toAdd.add(new Text("DoppiaSberla", Condivisa.mosseX2, secondLine, pokeFont.getFont(40f), Color.black));
+//                    System.out.println(mosse[Condivisa.selectedArrow].getUtilizzi());
+                    int yPP = Condivisa.YPosPP;
+                    Mossa temp = mosse[Condivisa.selectedArrow];
+                    toAdd.add(new Text(temp.getMaxPP() + "", 885, yPP, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(temp.getUtilizzi() + "", 810, yPP, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(temp.getTipo(), 770, 594, pokeFont.getFont(40f), Color.black));
+                }
+
+                if (Condivisa.waitingEnemy) {
+                    //toAdd.add(new Text("In attesa di " + Condivisa.enemyName, leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                 }
 
                 this.setData(toAdd);
