@@ -66,7 +66,8 @@ public class Condivisa {
     public static PEvent battleStarting = new PEvent("battleStarting", false, defaultCooldown);
     public static PEvent sendMyPokemon = new PEvent("sendMyPokemon", false, defaultCooldown);
     public static PEvent sendEnemyPokemon = new PEvent("sendEnemyPokeon", false, defaultCooldown);
-
+    public static PEvent waitEnemyStart = new PEvent("waitEnemyStart", false, defaultCooldown);
+    
     public static PEventList eventList;
 
     public static boolean myPokemonInCampo;

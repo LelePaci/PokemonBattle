@@ -118,7 +118,6 @@ public class Text {
 
                 if (Condivisa.sendMyPokemon.running) {
                     toAdd.add(new Text("Vai, " + Condivisa.myCurrentPokemon.getName(), leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
-
                 }
 
                 if (Condivisa.enemyPokemonInCampo) {
@@ -130,12 +129,12 @@ public class Text {
                     toAdd.add(new Text(Condivisa.myCurrentPokemon.getLife() + "/" + Condivisa.myCurrentPokemon.maxLife, 830, 350, pokeFont.getFont(30f), Color.black));
                 }
 
-                if (Condivisa.gameInput && !Condivisa.showMosse) {
+                if (Condivisa.gameInput && !Condivisa.showMosse && !Condivisa.waitingEnemy) {
                     toAdd.add(new Text("Cosa deve fare", leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                     toAdd.add(new Text(Condivisa.myCurrentPokemon.getName() + "?", leftSpacing, secondLine, pokeFont.getFont(40f), Color.white));
                 }
 
-                if (Condivisa.showMosse) {
+                if (Condivisa.showMosse && !Condivisa.waitingEnemy) {
                     Mossa[] mosse = Condivisa.myCurrentPokemon.getMosse();
                     toAdd.add(new Text(mosse[0].getNome(), Condivisa.mosseX1, firstLine, pokeFont.getFont(40f), Color.black));
                     toAdd.add(new Text(mosse[1].getNome(), Condivisa.mosseX2, firstLine, pokeFont.getFont(40f), Color.black));
@@ -153,8 +152,8 @@ public class Text {
                     toAdd.add(new Text(temp.getTipo(), 770, 594, pokeFont.getFont(40f), Color.black));
                 }
 
-                if (Condivisa.waitingEnemy) {
-                    //toAdd.add(new Text("In attesa di " + Condivisa.enemyName, leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
+                if (Condivisa.waitingEnemy && !Condivisa.gameInput) {
+                    toAdd.add(new Text("In attesa di " + Condivisa.enemyName, leftSpacing, firstLine, pokeFont.getFont(40f), Color.white));
                 }
 
                 this.setData(toAdd);

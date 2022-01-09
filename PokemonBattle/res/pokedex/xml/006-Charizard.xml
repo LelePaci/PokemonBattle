@@ -15,13 +15,13 @@
     <mosse>
         <mossa>
             <nome>Fuocobomba</nome>
-            <tipo>Normale</tipo>
+            <tipo>Fuoco</tipo>
             <danni>30</danni>
             <utilizziMax>35</utilizziMax>
         </mossa>
         <mossa>
             <nome>Aerassalto</nome>
-            <tipo>Fuoco</tipo>
+            <tipo>Volante</tipo>
             <danni>25</danni>
             <utilizziMax>40</utilizziMax>
         </mossa>

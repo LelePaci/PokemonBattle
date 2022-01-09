@@ -47,18 +47,12 @@ public class GenericObject extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        if (!id.equals("battleMenu")) {
+        if (!id.equals("battleMenu") && !id.equals("arrow1")) {
             g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
         } else {
-            //if (Condivisa.gameInput) {
-            g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
-            //}
-        }
-
-        if (!id.equals("arrow1")) {
-            g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
-        } else {
-            g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
+            if (Condivisa.gameInput && !Condivisa.waitingEnemy) {
+                g.drawImage(texture.image, (int) (x), (int) y, (int) width, (int) height, null);
+            }
         }
     }
 

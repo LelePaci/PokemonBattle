@@ -160,38 +160,64 @@ public class KeyInput extends KeyAdapter {
                     }
                 }
                 if (key == 10) {
-                    if (!Condivisa.showMosse) {
-                        Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/mossa-menu.png", 0, 0, 240, 48));
-                        Condivisa.arrows.get(0).x = Condivisa.XPosArrow[2];
-                        Condivisa.arrows.get(1).x = Condivisa.XPosArrow[3];
-                        Condivisa.arrows.get(2).x = Condivisa.XPosArrow[2];
-                        Condivisa.arrows.get(3).x = Condivisa.XPosArrow[3];
+                    if (!Condivisa.waitingEnemy) {
 
-                        Condivisa.arrows.get(2).y = Condivisa.YPosArrow[2];
-                        Condivisa.arrows.get(3).y = Condivisa.YPosArrow[2];
+                        System.out.println(Condivisa.selectedArrow);
+                        if (!Condivisa.showMosse) {
+                            switch (Condivisa.selectedArrow) {
+                                case 0:
+                                    Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/mossa-menu.png", 0, 0, 240, 48));
+                                    Condivisa.arrows.get(0).x = Condivisa.XPosArrow[2];
+                                    Condivisa.arrows.get(1).x = Condivisa.XPosArrow[3];
+                                    Condivisa.arrows.get(2).x = Condivisa.XPosArrow[2];
+                                    Condivisa.arrows.get(3).x = Condivisa.XPosArrow[3];
 
-                        Condivisa.showMosse = true;
-                    } else if(!Condivisa.waitingEnemy){
-                        Mossa mossa = Condivisa.myCurrentPokemon.getMosse()[Condivisa.selectedArrow];
-                        String xml = parser.getXMLAttacco(mossa.getNome(), mossa.getTipo(), mossa.getDanni(), mossa.getTipoStatus(), mossa.getProbStatus());
-                        Condivisa.client.invia(xml);
+                                    Condivisa.arrows.get(2).y = Condivisa.YPosArrow[2];
+                                    Condivisa.arrows.get(3).y = Condivisa.YPosArrow[2];
 
-                        Condivisa.arrows.get(0).x = Condivisa.XPosArrow[0];
-                        Condivisa.arrows.get(1).x = Condivisa.XPosArrow[1];
-                        Condivisa.arrows.get(2).x = Condivisa.XPosArrow[0];
-                        Condivisa.arrows.get(3).x = Condivisa.XPosArrow[1];
+                                    Condivisa.showMosse = true;
 
-                        Condivisa.arrows.get(2).y = Condivisa.YPosArrow[1];
-                        Condivisa.arrows.get(3).y = Condivisa.YPosArrow[1];
+                                    break;
+                                case 1:
+                                    //show inventario
+                                    Condivisa.level++;
+                                    Condivisa.handler.clearLevel();
+                                    Condivisa.game.createLevel(Condivisa.level);
+                                    break;
+                                case 2:
+                                    Condivisa.level += 2;
+                                    Condivisa.handler.clearLevel();
+                                    Condivisa.game.createLevel(Condivisa.level);
+                                    break;
+                                case 3:
+                                    Condivisa.level += 3;
+                                    Condivisa.handler.clearLevel();
+                                    Condivisa.game.createLevel(Condivisa.level);
+                                    String xml = parser.getXMLResa();
+                                    Condivisa.client.invia(xml);
+                                    break;
+                            }
+                        } else {
+                            Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/empty-240.48.png", 0, 0, 240, 48));
+                            Mossa mossa = Condivisa.myCurrentPokemon.getMosse()[Condivisa.selectedArrow];
+                            String xml = parser.getXMLAttacco(mossa.getNome(), mossa.getTipo(), mossa.getDanni(), mossa.getTipoStatus(), mossa.getProbStatus());
+                            Condivisa.client.invia(xml);
 
-                        Condivisa.mossaMenu.changeTexture(new Texture("res/ingame-menu/empty-240.48.png", 0, 0, 240, 48));
-                        Condivisa.showMosse = false;
-                        Condivisa.waitingEnemy = true;
+                            Condivisa.arrows.get(0).x = Condivisa.XPosArrow[0];
+                            Condivisa.arrows.get(1).x = Condivisa.XPosArrow[1];
+                            Condivisa.arrows.get(2).x = Condivisa.XPosArrow[0];
+                            Condivisa.arrows.get(3).x = Condivisa.XPosArrow[1];
+
+                            Condivisa.arrows.get(2).y = Condivisa.YPosArrow[1];
+                            Condivisa.arrows.get(3).y = Condivisa.YPosArrow[1];
+
+                            Condivisa.showMosse = false;
+                        }
+
+                        Condivisa.selectedArrow = 0; //In ogni caso la freccia si resetta sulla prima posizione
                     }
-                    if (Condivisa.waitingEnemy) {
-                        //sostanzialmente nulla
-                    }
-                    Condivisa.selectedArrow = 0; //In ogni caso la freccia si resetta sulla prima posizione
+
+                    refreshArrow();
                 }
 
                 /*

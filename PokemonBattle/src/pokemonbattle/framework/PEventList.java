@@ -42,7 +42,7 @@ public class PEventList extends Thread {
                 PEvent event = list.get(0);
                 event.running = true;
                 if (event.running) {
-//                    System.out.println(event.name + " " + event.cooldown);
+                    System.out.println(event.name + " " + event.cooldown);
                     if (event.cooldown > 0) {
                         event.cooldown--;
 
@@ -53,6 +53,10 @@ public class PEventList extends Thread {
                         event.running = false;
                         if (event.name.equals("sendEnemyPokemon") || event.name.equals("sendMyPokemon")) {
                             Condivisa.gameInput = true;
+                        }
+                        if (event.name.equals("waitEnemyStart")) {
+                            Condivisa.waitingEnemy = true;
+                            System.out.println("test");
                         }
                         list.remove(0);
                     }
