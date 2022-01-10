@@ -221,10 +221,6 @@ public class KeyInput extends KeyAdapter {
                 }
 
                 /*
-
-                if (key == 69) {
-                    Condivisa.eventList.addEvent(Condivisa.sendEnemyPokemon);
-                }
                 if (key == 67) {
                     //invio i
 
@@ -240,6 +236,15 @@ public class KeyInput extends KeyAdapter {
                  */
                 break;
             case 4:
+                Condivisa.hoveredPokemonID = 0;
+                if (key == 39) {
+                    if (Condivisa.hoveredPokemonID  == 0) {
+                        Condivisa.hoveredPokemonID += 1;
+                        refreshPokedex();
+                    }
+                }
+
+                /*
                 if (key == 66) {
                     //invio nuovo pokemon
                     Pokemon temp = Condivisa.selectedPokemon.get(1);
@@ -250,12 +255,13 @@ public class KeyInput extends KeyAdapter {
                     Condivisa.level--;
                     Condivisa.handler.clearLevel();
                     Condivisa.game.createLevel(Condivisa.level);
-                }
-        }
+                 */
+                break;
     }
+}
 
-    @Override
-    public void keyReleased(KeyEvent e) {
+@Override
+public void keyReleased(KeyEvent e) {
 
     }
 
@@ -277,5 +283,13 @@ public class KeyInput extends KeyAdapter {
             }
         }
         Condivisa.arrows.get(Condivisa.selectedArrow).changeTexture(new Texture("res/ingame-menu/arrow.png", 0, 0, 6, 10));
+    }
+    
+    private void refreshChangeList(){
+        for (int i = 0; i < 6; i++) {
+            if (true) {
+                
+            }
+        }
     }
 }

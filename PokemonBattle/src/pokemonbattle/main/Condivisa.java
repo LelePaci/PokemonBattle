@@ -47,7 +47,7 @@ public class Condivisa {
     public static String enemyName = "guest";
     public static Pokemon enemyPokemon;
 
-    //Level: Inserimento nickname
+    //Level: Inserimento nickname e pokemon
     public static boolean canChangeName = true;
     public static final String pokedexPath = "res/pokedex/xml";
     public static final int pokedexCount = MyFile.CountElement(pokedexPath);

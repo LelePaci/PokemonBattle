@@ -8,6 +8,7 @@ package pokemonbattle.framework;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -160,15 +161,18 @@ public class Text {
                 toAdd.clear();
                 break;
             case 4:
+                String coord = MouseInfo.getPointerInfo().getLocation().toString();
+                toAdd.add(new Text(coord, 5, 12, pokeFont.getFont(10f), Color.black));
                 for (int i = 0; i <  Condivisa.changeList.size() ; i++) {
                     Pokemon temp = Condivisa.changeList.get(i).getPokemon();
                     String nome = temp.getName();
                     int life = temp.getLife();
+                    int maxLife = temp.maxLife;
                     int tempX = Condivisa.changeList.get(i).getRelX();
                     int tempY = Condivisa.changeList.get(i).getRelY();
-                    toAdd.add(new Text(nome, tempX + 63, tempY + 55, pokeFont.getFont(20f), Color.black));
-                    toAdd.add(new Text(life + "", tempX + 75, tempY + 93, pokeFont.getFont(20f), Color.black));
-                    toAdd.add(new Text(life + "", tempX + 120, tempY + 93, pokeFont.getFont(20f), Color.black));
+                    toAdd.add(new Text(nome, tempX + 80, tempY + 30, pokeFont.getFont(40f), Color.black));
+                    toAdd.add(new Text(life + "", tempX + 510, tempY + 70, pokeFont.getFont(30f), Color.black));
+                    toAdd.add(new Text(maxLife + "", tempX + 460, tempY + 70, pokeFont.getFont(30f), Color.black));
                 }
                 this.setData(toAdd);
                 toAdd.clear();

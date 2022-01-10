@@ -21,7 +21,7 @@ public class ChangePokemon extends GameObject {
     private final Pokemon pokemon;
     private int type;
 
-    public ChangePokemon(Handler handler, int type, int x, int y, Pokemon pokemon) {
+    public ChangePokemon(Handler handler, int type, int x, int y, Pokemon pokemon, int id) {
         super(x, y);
         this.handler = handler;
         this.pokemon = pokemon;
@@ -37,7 +37,11 @@ public class ChangePokemon extends GameObject {
             texture = new Texture("res/pokemon-menu/pokemon-base.png", 0, 0, 83, 55);
             size = 3;
             offset = 5;
-        } else {
+        } else if (type == 2) {
+            texture = new Texture("res/pokemon-menu/pokemon-selected.png", 0, 0, 83, 55);
+            size = 3;
+            offset = 5;
+        }else {
             texture = new Texture("res/pokemon-menu/pokemon-info.png", 0, 0, 150, 22);
             size = 1;
             offset = 5;
