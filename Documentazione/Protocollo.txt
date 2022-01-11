@@ -217,6 +217,11 @@ FILE XML DI ESEMPIO:
     <root>
     <comando>n</comando>
     </root>
+<!-- XML FINE TURNO>
+<root>
+    <comando>p</comando>
+</root>
+
 <!-- XML FINE BATTAGLIA-->
 <root>
     <comando>f</comando>
