@@ -129,6 +129,7 @@ public class KeyInput extends KeyAdapter {
                     if (!Connection.validateFromString(ipAddress)) {
                         Condivisa.errorAddress = true;
                     } else {
+                        Condivisa.server.canConnect = false;
                         Condivisa.gameLogic.connectionStarted();
                     }
                 }

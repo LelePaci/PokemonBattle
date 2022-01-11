@@ -169,4 +169,5 @@ public class Pokemon extends GameObject {
     public void render(Graphics g) {
         g.drawImage(texture.image, (int) (x - width / 2), (int) y, (int) width, (int) height, null);
     }
+    
 }

@@ -13,7 +13,7 @@ public class TCPServer extends Thread {
     private boolean running = true;
     PrintWriter out;
     private TCPClient client;
-    private boolean canConnect = true;
+    public boolean canConnect = true;
 
     public TCPServer(Game game, Handler handler) {
         try {
